@@ -268,6 +268,13 @@ public partial class Canvas : IGestureListener
             Super.Log(e);
         }
 
+        // ContextMenu: a control that took the request marked the (possibly rescaled) event Handled;
+        // the gesture effect reads the original args to decide preventDefault
+        if (touchAction == TouchActionResult.ContextMenu && args.Event != null && args.Event != args1)
+        {
+            args1.Handled = args.Event.Handled;
+        }
+
         Repaint();
 
     }

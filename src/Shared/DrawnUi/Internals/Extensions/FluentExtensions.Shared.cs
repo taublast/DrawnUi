@@ -1624,6 +1624,33 @@ namespace DrawnUi.Draw
         }
 
 
+        /// <summary>
+        /// Attaches a handler to the ContextMenu event (right click / long press / Menu key on the web heads) with
+        /// automatic cleanup on disposal. Set <c>e.Handled = true</c> inside to suppress the browser's own menu.
+        /// </summary>
+        public static T OnContextMenu<T>(this T view, Action<T, ContextMenuEventArgs> action) where T : SkiaControl
+        {
+            try
+            {
+                void onContextMenu(object s, ContextMenuEventArgs a)
+                {
+                    action?.Invoke(view, a);
+                }
+                view.ContextMenu += onContextMenu;
+                string subscriptionKey = $"contextmenu_{Guid.NewGuid()}";
+                view.ExecuteUponDisposal[subscriptionKey] = () =>
+                {
+                    view.ContextMenu -= onContextMenu;
+                };
+            }
+            catch (Exception e)
+            {
+                Super.Log(e);
+            }
+
+            return view;
+        }
+
         #endregion
 
         #region UI

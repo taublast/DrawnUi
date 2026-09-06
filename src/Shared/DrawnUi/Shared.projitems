@@ -74,6 +74,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Zoom\ZoomContent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\SKPaintExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\ControlTappedEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\ContextMenuEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\ObservableAttachedItemsCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Base\VisualLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\SkiaBackdrop.cs" />

@@ -117,7 +117,8 @@ setModuleExports({
   onBrowserFrame: Super.OnBrowserFrame, onCanvasResize: Host.OnCanvasResize,
   onPointerDown: Input.OnPointerDown, onPointerMove: Input.OnPointerMove,
   onPointerUp: Input.OnPointerUp, onPointerCancel: Input.OnPointerCancel,
-  onWheel: Input.OnWheel, onKeyDown: Input.OnKeyDown, onKeyUp: Input.OnKeyUp,
+  onWheel: Input.OnWheel,
+  onContextMenu: Input.OnContextMenu, onKeyDown: Input.OnKeyDown, onKeyUp: Input.OnKeyUp,
 });
 
 const config = getConfig();

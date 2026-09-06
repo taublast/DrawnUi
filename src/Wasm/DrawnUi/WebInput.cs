@@ -114,9 +114,9 @@ public static partial class WebInput
         {
             args.StartingLocation = _pointerDownArgs.StartingLocation;
 
-            // Check for tap
+            // Check for tap: only the primary button (0) taps, a right / middle click still delivers Up
             var threshold = TouchEffect.TappedCancelMoveThresholdPoints * Math.Max(0.1f, TouchEffect.Density);
-            if (Math.Abs(args.Distance.Total.X) < threshold && Math.Abs(args.Distance.Total.Y) < threshold)
+            if (button == 0 && Math.Abs(args.Distance.Total.X) < threshold && Math.Abs(args.Distance.Total.Y) < threshold)
             {
                 TargetCanvas?.OnGestureEvent(TouchActionType.Released, args, TouchActionResult.Tapped);
             }
@@ -126,6 +126,32 @@ public static partial class WebInput
 
         _pointerDownArgs = null;
         _previousArgs = null;
+    }
+
+    /// <summary>
+    /// Called by JS on the browser contextmenu event (right click, long press on touch, keyboard Menu key).
+    /// Returns true when a control took it (the JS side then calls preventDefault); false = browser menu shows.
+    /// </summary>
+    [JSExport]
+    public static bool OnContextMenu(double x, double y, string pointerType)
+    {
+        var scale = Math.Max(0.1f, RenderingScale);
+        var location = new PointF((float)x * scale, (float)y * scale);
+        var args = MakeTouchArgs(0, TouchActionType.ContextMenu, location);
+        args.IsInsideView = true;
+        args.StartingLocation = location;
+        args.Distance = new TouchActionEventArgs.DistanceInfo();
+        args.Pointer = new PointerData
+        {
+            Button = MouseButton.Right,
+            ButtonNumber = 2,
+            State = MouseButtonState.Released,
+            DeviceType = pointerType switch { "touch" => PointerDeviceType.Touch, "pen" => PointerDeviceType.Pen, _ => PointerDeviceType.Mouse },
+        };
+
+        TargetCanvas?.OnGestureEvent(TouchActionType.ContextMenu, args, TouchActionResult.ContextMenu);
+
+        return args.Handled;
     }
 
     /// <summary>

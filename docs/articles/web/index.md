@@ -63,7 +63,7 @@ public static Task Main() =>
 
 ## Gestures
 
-`Gestures = GesturesMode.Enabled` routes browser pointer/touch/wheel input to DrawnUI. `GesturesMode.Lock` additionally applies the CSS guard (`touch-action`, `overscroll-behavior`, a non-passive `touchmove` guard) that stops iOS page panning / swipe-to-close while DrawnUI owns the gesture.
+`Gestures = GesturesMode.Enabled` routes browser pointer/touch/wheel input to DrawnUI. A right click (or a long press, or the Menu key) raises `ContextMenu` on the control under it; a handler that sets `e.Handled = true` suppresses the browser's own canvas menu, otherwise it shows — see [Handling Gestures](../gestures.md#context-menu-on-the-web-right-click). Right and middle clicks never `Tapped`. If you wire `main.js` by hand, pass `onContextMenu: Input.OnContextMenu` in `setModuleExports`. `GesturesMode.Lock` additionally applies the CSS guard (`touch-action`, `overscroll-behavior`, a non-passive `touchmove` guard) that stops iOS page panning / swipe-to-close while DrawnUI owns the gesture.
 
 ## Samples
 
