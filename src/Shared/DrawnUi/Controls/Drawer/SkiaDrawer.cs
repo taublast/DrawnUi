@@ -395,9 +395,16 @@ namespace DrawnUi.Controls
             return initialVelocity * decelerationRate / (1 - decelerationRate);
         }
 
+        /// <summary>
+        /// Velocity (points per second) used to animate to a snap point when the gesture left
+        /// none, e.g. a programmatic IsOpen change. Sets the open/close duration through
+        /// SnappingLayout's speed formula: 1500 (default) ≈ 0.14 s, 840 ≈ 0.25 s, 375 ≈ 0.56 s.
+        /// </summary>
+        public double AutoVelocity { get; set; } = 1500;
+
         protected override Vector2 GetAutoVelocity(Vector2 displacement)
         {
-            var velocity = 1500; //todo as property
+            var velocity = (float)AutoVelocity;
 
             switch (this.Direction)
             {
