@@ -6241,11 +6241,19 @@ namespace DrawnUi.Draw
             var constraintBottom = (float)Math.Round((UsePadding.Bottom + Margins.Bottom) * scale);
 
 
+            // Right/bottom derived from the rounded SIZE, not from the rounded opposite edge: rounding two
+            // fractional edges apart can change the size by a pixel, which is the same position-dependent
+            // drift this method is fixing.
+            var left = (float)Math.Round(destination.Left);
+            var top = (float)Math.Round(destination.Top);
+            var width = (float)Math.Round(destination.Width);
+            var height = (float)Math.Round(destination.Height);
+
             SKRect rectForChild = new SKRect(
-                (float)Math.Round(destination.Left) + constraintLeft,
-                (float)Math.Round(destination.Top) + constraintTop,
-                (float)Math.Round(destination.Right) - constraintRight,
-                (float)Math.Round(destination.Bottom) - constraintBottom
+                left + constraintLeft,
+                top + constraintTop,
+                left + width - constraintRight,
+                top + height - constraintBottom
             );
 
             return rectForChild;
