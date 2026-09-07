@@ -46,7 +46,7 @@ namespace DrawnUi.Draw
         /// stroke inset for content layout is safe.
         /// </summary>
         protected override SKRect CalculateContentSizeForStroke(SKRect destination, float scale)
-            => ContractPixelsRect(destination, scale, UsePadding);
+            => ContractPixelsRectRounded(destination, scale, UsePadding);
 
         public override void OnWillDisposeWithChildren()
         {

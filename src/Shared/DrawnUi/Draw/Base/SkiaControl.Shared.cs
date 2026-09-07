@@ -6202,6 +6202,23 @@ namespace DrawnUi.Draw
             );
         }
 
+        /// <summary>
+        /// Contracts a rect by an inset the same way MEASURING reserves it: each side rounded to whole
+        /// pixels (see <see cref="GetAllMarginsInPixels"/>). Subtracting the raw fractional inset instead
+        /// (2pt at scale 1.25 = 2.5px per side) takes 5px where measure reserved 4, so children end up
+        /// arranged into a rect up to 1px narrower than the size they were measured for and clip their
+        /// content — a button label losing its last glyph, for example.
+        /// </summary>
+        public static SKRect ContractPixelsRectRounded(SKRect rect, float scale, Thickness amount)
+        {
+            return new SKRect(
+                rect.Left + (float)Math.Round(amount.Left * scale),
+                rect.Top + (float)Math.Round(amount.Top * scale),
+                rect.Right - (float)Math.Round(amount.Right * scale),
+                rect.Bottom - (float)Math.Round(amount.Bottom * scale)
+            );
+        }
+
         public static SKRect ExpandPixelsRect(SKRect rect, float scale, Thickness amount)
         {
             return new SKRect(
@@ -6214,17 +6231,21 @@ namespace DrawnUi.Draw
 
         public SKRect GetDrawingRectForChildren(SKRect destination, double scale)
         {
-            var constraintLeft = (UsePadding.Left + Margins.Left) * scale;
-            var constraintRight = (UsePadding.Right + Margins.Right) * scale;
-            var constraintTop = (UsePadding.Top + Margins.Top) * scale;
-            var constraintBottom = (UsePadding.Bottom + Margins.Bottom) * scale;
+            // Round each side like measuring does (GetAllMarginsInPixels) instead of rounding the absolute
+            // edges: with a fractional inset (2pt at scale 1.25 = 2.5px) rounding "left + 2.5" and
+            // "right - 2.5" reserves 2px on one side and 3px on the other depending on where the control
+            // sits on screen, so children were arranged up to 1px narrower than they were measured for.
+            var constraintLeft = (float)Math.Round((UsePadding.Left + Margins.Left) * scale);
+            var constraintRight = (float)Math.Round((UsePadding.Right + Margins.Right) * scale);
+            var constraintTop = (float)Math.Round((UsePadding.Top + Margins.Top) * scale);
+            var constraintBottom = (float)Math.Round((UsePadding.Bottom + Margins.Bottom) * scale);
 
 
             SKRect rectForChild = new SKRect(
-                (float)Math.Round(destination.Left + (float)constraintLeft),
-                (float)Math.Round(destination.Top + (float)constraintTop),
-                (float)Math.Round(destination.Right - (float)constraintRight),
-                (float)Math.Round(destination.Bottom - (float)constraintBottom)
+                (float)Math.Round(destination.Left) + constraintLeft,
+                (float)Math.Round(destination.Top) + constraintTop,
+                (float)Math.Round(destination.Right) - constraintRight,
+                (float)Math.Round(destination.Bottom) - constraintBottom
             );
 
             return rectForChild;

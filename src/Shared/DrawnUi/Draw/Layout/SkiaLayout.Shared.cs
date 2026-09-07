@@ -1178,7 +1178,7 @@ namespace DrawnUi.Draw
 
                 base.Paint(ctx);
 
-                var rectForChildren = ContractPixelsRect(ctx.Destination, ctx.Scale, UsePadding);
+                var rectForChildren = ContractPixelsRectRounded(ctx.Destination, ctx.Scale, UsePadding);
 
                 var drawnChildrenCount = 0;
 
