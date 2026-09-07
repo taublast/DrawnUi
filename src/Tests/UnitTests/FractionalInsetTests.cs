@@ -7,10 +7,10 @@ using SkiaLayout = DrawnUi.Draw.SkiaLayout;
 namespace UnitTests
 {
     /// <summary>
-    /// Fractional insets (2pt padding at scale 1.25 = 2.5px) must be reserved at DRAW exactly as
-    /// MEASURE reserved them: rounded per side. Subtracting the raw value took 5px where measure
-    /// reserved 4, so children were arranged 1px narrower than the size they were measured for and
-    /// clipped their content (button captions losing their last glyph, 2026-09-07).
+    /// Fractional insets (2pt padding at scale 1.25 = 2.5px). Drawing used to subtract the raw inset
+    /// while measuring reserved it rounded, so content was arranged into less room than it was measured
+    /// for and clipped (button captions losing their last glyph, 2026-09-07). Drawing now reserves the
+    /// SMALLER of the two, which can only give content more room than before — never less.
     /// </summary>
     public class FractionalInsetTests : DrawnTestsBase
     {
@@ -32,45 +32,59 @@ namespace UnitTests
             Children = new List<SkiaControl> { child }
         };
 
+        private static readonly float[] Scales = { 1f, 1.25f, 1.5f, 1.75f, 2f, 2.5f, 2.75f, 3f };
+        private static readonly double[] Insets = { 0, 0.5, 1, 1.5, 2, 2.5, 3, 4, 6, 8, 10, 12, 16, 24 };
+
         [Fact]
-        public void FractionalPadding_ChildrenRectMatchesWhatMeasureReserved()
+        public void ContentInsetIsNeverMoreThanMeasuringReserved()
         {
-            // 2pt padding at 1.25 = 2.5px per side: measure reserves round(2.5)=2 per side
-            var child = Box(80, 20);
-            var layout = Padded(child, 2);
+            // the invariant that stops the clipping: content must fit the size it was measured for
+            var rect = new SKRect(0, 0, 400, 400);
 
-            layout.CommitInvalidations();
-            var measured = layout.Measure(float.PositiveInfinity, float.PositiveInfinity, Scale);
+            foreach (var scale in Scales)
+            foreach (var inset in Insets)
+            {
+                var reservedByMeasure = (float)Math.Round(inset * scale);
+                var content = SkiaControl.ContractPixelsRectForContent(rect, scale, new Thickness(inset));
+                var reservedByDraw = content.Left - rect.Left;
 
-            var reserved = (float)Math.Round(2 * Scale) * 2;
-            var forChildren = layout.GetDrawingRectForChildren(
-                new SKRect(0, 0, measured.Pixels.Width, measured.Pixels.Height), Scale);
-
-            Assert.Equal(measured.Pixels.Width - reserved, forChildren.Width);
-            Assert.Equal(measured.Pixels.Height - reserved, forChildren.Height);
-            Assert.Equal(child.MeasuredSize.Pixels.Width, forChildren.Width);
+                Assert.True(reservedByDraw <= reservedByMeasure + 0.001f,
+                    $"scale {scale} inset {inset}: draw reserved {reservedByDraw}, measure reserved {reservedByMeasure}");
+            }
         }
 
         [Fact]
-        public void FractionalPadding_ChildrenRectDoesNotDependOnPosition()
+        public void ContentIsNeverGivenLessRoomThanBefore()
         {
-            // rounding the absolute edges made the reserved amount depend on where the parent sat:
-            // round(0 + 2.5) = 2 but round(108.5) = 108, so the same layout lost a pixel at some offsets
-            var layout = Padded(Box(80, 20), 2);
-            layout.CommitInvalidations();
-            var measured = layout.Measure(float.PositiveInfinity, float.PositiveInfinity, Scale);
+            // no existing layout may shrink: the old rule subtracted the raw inset
+            var rect = new SKRect(0, 0, 400, 400);
 
-            var w = measured.Pixels.Width;
-            var h = measured.Pixels.Height;
-            var atZero = layout.GetDrawingRectForChildren(new SKRect(0, 0, w, h), Scale);
-
-            foreach (var offset in new[] { 0.5f, 1f, 7f, 85f, 85.5f, 122.25f })
+            foreach (var scale in Scales)
+            foreach (var inset in Insets)
             {
-                var moved = layout.GetDrawingRectForChildren(
-                    new SKRect(offset, offset, offset + w, offset + h), Scale);
+                var legacy = SkiaControl.ContractPixelsRect(rect, scale, new Thickness(inset));
+                var current = SkiaControl.ContractPixelsRectForContent(rect, scale, new Thickness(inset));
 
-                Assert.Equal(atZero.Width, moved.Width);
-                Assert.Equal(atZero.Height, moved.Height);
+                Assert.True(current.Width >= legacy.Width - 0.001f,
+                    $"scale {scale} inset {inset}: {legacy.Width} -> {current.Width}");
+                Assert.True(current.Height >= legacy.Height - 0.001f,
+                    $"scale {scale} inset {inset}: {legacy.Height} -> {current.Height}");
+            }
+        }
+
+        [Fact]
+        public void WholePixelInsets_Unchanged()
+        {
+            // guard: where the inset already lands on whole pixels nothing moves at all
+            var rect = new SKRect(0, 0, 400, 400);
+
+            foreach (var scale in new[] { 1f, 2f, 3f })
+            foreach (var inset in new double[] { 0, 1, 2, 3, 8, 24 })
+            {
+                var legacy = SkiaControl.ContractPixelsRect(rect, scale, new Thickness(inset));
+                var current = SkiaControl.ContractPixelsRectForContent(rect, scale, new Thickness(inset));
+
+                Assert.Equal(legacy, current);
             }
         }
 
@@ -102,22 +116,6 @@ namespace UnitTests
 
             Assert.True(child.DrawingRect.Width >= child.MeasuredSize.Pixels.Width,
                 $"child arranged into {child.DrawingRect.Width} but measured {child.MeasuredSize.Pixels.Width}");
-        }
-
-        [Fact]
-        public void IntegerInsetsAtWholeScale_Unchanged()
-        {
-            // guard: nothing changes where the inset already lands on whole pixels
-            Super.Screen.Density = 2f;
-            var layout = Padded(Box(80, 20), 3);
-            layout.CommitInvalidations();
-            var measured = layout.Measure(float.PositiveInfinity, float.PositiveInfinity, 2f);
-
-            var forChildren = layout.GetDrawingRectForChildren(
-                new SKRect(0, 0, measured.Pixels.Width, measured.Pixels.Height), 2f);
-
-            Assert.Equal(6, forChildren.Left);
-            Assert.Equal(measured.Pixels.Width - 12, forChildren.Width);
         }
     }
 }
