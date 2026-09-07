@@ -17,7 +17,11 @@ Supported hosts:
 * `DrawnUi.Wasm` - pure browser WebAssembly, no Blazor required.
 * `DrawnUi.OpenTk` - Windows and Linux desktops.
 * `DrawnUi.Net` - platform-agnostic console/server rendering scenarios.
-* More to come..
+
+## React?
+
+DrawnUI for React just appeared as a standalone DrawnUI engine in TypeScript, running on [CanvasKit](https://skia.org/docs/user/modules/canvaskit/) (Skia compiled to WebAssembly) in the browser. It tends to use same API as the .NET version. 
+Under active development, more info [on our site](https://drawnui.net/articles/react).
 
 ## Features 
 
@@ -51,7 +55,6 @@ Supported hosts:
 🤖 [AI skills](https://drawnui.net/llms.txt)   
 🤩 [Fiddle](https://fiddle.drawnui.net)   
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
-
 
 ## What's New 1.10.6.8
 
