@@ -295,14 +295,14 @@ The request is routed like a tap: the deepest hit control first (through transfo
 parents; the first handler returning `true` wins. `ContextMenuEventArgs` carries `Source` (`Mouse` for a right
 click, `Touch` for a long press, `Keyboard` for the Menu key), `Local`, and the usual `Parameters` /
 `ProcessingInfo` of a tap. Under the hood it is the `TouchActionResult.ContextMenu` gesture (AppoMobi.Gestures
-3.11.0), so `ConsumeGestures` and `ProcessGestures` overrides see it too. A right click therefore arrives twice, as a
+3.11.1), so `ConsumeGestures` and `ProcessGestures` overrides see it too. A right click therefore arrives twice, as a
 `Tapped` with `Button == MouseButton.Right` and as a `ContextMenu`; that is by design, the two answer different
 questions. Other platforms never raise `ContextMenu`.
 
 Per head:
 
 - **Blazor** (`DrawnUi.Blazor.Wasm`): wired by `AppoMobi.Blazor.Gestures`. Up to 3.10.x the browser menu was always
-  suppressed over the canvas; from 3.11.0 it shows unless a handler takes it. Blazor Server keeps suppressing it (the
+  suppressed over the canvas; from 3.11.1 it shows unless a handler takes it. Blazor Server keeps suppressing it (the
   decision needs the synchronous JS → .NET call that WebAssembly has).
 - **`DrawnUi.Wasm`**: `RunAsync` wires it; hand-written `main.js` files pass `onContextMenu: Input.OnContextMenu` in
   `setModuleExports`, see [DrawnUi.Wasm](web/index.md#gestures).

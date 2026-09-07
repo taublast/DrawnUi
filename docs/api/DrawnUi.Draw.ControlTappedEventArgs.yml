@@ -33,6 +33,8 @@ items:
   inheritance:
   - System.Object
   - System.EventArgs
+  derivedClasses:
+  - DrawnUi.Draw.ContextMenuEventArgs
   inheritedMembers:
   - System.EventArgs.Empty
   - System.Object.Equals(System.Object)

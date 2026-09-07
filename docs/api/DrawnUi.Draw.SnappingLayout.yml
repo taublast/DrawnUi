@@ -574,6 +574,7 @@ items:
   - DrawnUi.Draw.SkiaControl.TransformView
   - DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
   - DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+  - DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   - DrawnUi.Draw.SkiaControl.SendLongPressing(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   - DrawnUi.Draw.SkiaControl.ChildTapped
@@ -582,6 +583,7 @@ items:
   - DrawnUi.Draw.SkiaControl.OnGestures
   - DrawnUi.Draw.SkiaControl.Tapped
   - DrawnUi.Draw.SkiaControl.LongPressing
+  - DrawnUi.Draw.SkiaControl.ContextMenu
   - DrawnUi.Draw.SkiaControl.ConsumeGestures
   - DrawnUi.Draw.SkiaControl.OnChildTapped(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
@@ -1221,6 +1223,7 @@ items:
   - DrawnUi.Draw.SnappingLayout.DrawnUi.Draw.FluentExtensions.Observe``2(System.Func{{TSource}},System.Action{DrawnUi.Draw.SnappingLayout},System.String[])
   - DrawnUi.Draw.SnappingLayout.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.SnappingLayout,System.String},System.String[])
   - DrawnUi.Draw.SnappingLayout.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.SnappingLayout},System.String[])
+  - DrawnUi.Draw.SnappingLayout.DrawnUi.Draw.FluentExtensions.OnContextMenu``1(System.Func{DrawnUi.Draw.SnappingLayout,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
   - DrawnUi.Draw.SnappingLayout.DrawnUi.Draw.FluentExtensions.OnKeyDown``1(System.Action{DrawnUi.Draw.SnappingLayout,DrawnUi.Draw.InputKey})
   - DrawnUi.Draw.SnappingLayout.DrawnUi.Draw.FluentExtensions.OnKeyUp``1(System.Action{DrawnUi.Draw.SnappingLayout,DrawnUi.Draw.InputKey})
   - DrawnUi.Draw.SnappingLayout.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Draw.SnappingLayout})
@@ -13626,6 +13629,57 @@ references:
   name: SkipRenderingOutOfBounds
   nameWithType: SkiaControl.SkipRenderingOutOfBounds
   fullName: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+- uid: DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SendContextMenu_System_Object_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: SendContextMenu(object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: SkiaControl.SendContextMenu(object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaControl.SendContextMenu(object, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  nameWithType.vb: SkiaControl.SendContextMenu(Object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SendContextMenu(Object, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  name.vb: SendContextMenu(Object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: SendContextMenu
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SendContextMenu_System_Object_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: SendContextMenu
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SendContextMenu_System_Object_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   parent: DrawnUi.Draw.SkiaControl
@@ -13833,6 +13887,13 @@ references:
   name: LongPressing
   nameWithType: SkiaControl.LongPressing
   fullName: DrawnUi.Draw.SkiaControl.LongPressing
+- uid: DrawnUi.Draw.SkiaControl.ContextMenu
+  commentId: P:DrawnUi.Draw.SkiaControl.ContextMenu
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ContextMenu
+  name: ContextMenu
+  nameWithType: SkiaControl.ContextMenu
+  fullName: DrawnUi.Draw.SkiaControl.ContextMenu
 - uid: DrawnUi.Draw.SkiaControl.ConsumeGestures
   commentId: E:DrawnUi.Draw.SkiaControl.ConsumeGestures
   parent: DrawnUi.Draw.SkiaControl
@@ -30326,6 +30387,93 @@ references:
   - name: (
   - name: )
   - name: )
+- uid: DrawnUi.Draw.SnappingLayout.DrawnUi.Draw.FluentExtensions.OnContextMenu``1(System.Func{DrawnUi.Draw.SnappingLayout,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  name: OnContextMenu<SnappingLayout>(SnappingLayout, Func<SnappingLayout, ContextMenuEventArgs, bool>)
+  nameWithType: FluentExtensions.OnContextMenu<SnappingLayout>(SnappingLayout, Func<SnappingLayout, ContextMenuEventArgs, bool>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnContextMenu<DrawnUi.Draw.SnappingLayout>(DrawnUi.Draw.SnappingLayout, System.Func<DrawnUi.Draw.SnappingLayout, DrawnUi.Draw.ContextMenuEventArgs, bool>)
+  nameWithType.vb: FluentExtensions.OnContextMenu(Of SnappingLayout)(SnappingLayout, Func(Of SnappingLayout, ContextMenuEventArgs, Boolean))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnContextMenu(Of DrawnUi.Draw.SnappingLayout)(DrawnUi.Draw.SnappingLayout, System.Func(Of DrawnUi.Draw.SnappingLayout, DrawnUi.Draw.ContextMenuEventArgs, Boolean))
+  name.vb: OnContextMenu(Of SnappingLayout)(SnappingLayout, Func(Of SnappingLayout, ContextMenuEventArgs, Boolean))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(DrawnUi.Draw.SnappingLayout,System.Func{DrawnUi.Draw.SnappingLayout,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: <
+  - uid: DrawnUi.Draw.SnappingLayout
+    name: SnappingLayout
+    href: DrawnUi.Draw.SnappingLayout.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.SnappingLayout
+    name: SnappingLayout
+    href: DrawnUi.Draw.SnappingLayout.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: <
+  - uid: DrawnUi.Draw.SnappingLayout
+    name: SnappingLayout
+    href: DrawnUi.Draw.SnappingLayout.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(DrawnUi.Draw.SnappingLayout,System.Func{DrawnUi.Draw.SnappingLayout,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SnappingLayout
+    name: SnappingLayout
+    href: DrawnUi.Draw.SnappingLayout.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.SnappingLayout
+    name: SnappingLayout
+    href: DrawnUi.Draw.SnappingLayout.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SnappingLayout
+    name: SnappingLayout
+    href: DrawnUi.Draw.SnappingLayout.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.SnappingLayout.DrawnUi.Draw.FluentExtensions.OnKeyDown``1(System.Action{DrawnUi.Draw.SnappingLayout,DrawnUi.Draw.InputKey})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnKeyDown``1(``0,System.Action{``0,DrawnUi.Draw.InputKey})
   parent: DrawnUi.Draw.FluentExtensions
@@ -38368,6 +38516,80 @@ references:
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.string
   - name: (
+  - name: )
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  name: OnContextMenu<T>(T, Func<T, ContextMenuEventArgs, bool>)
+  nameWithType: FluentExtensions.OnContextMenu<T>(T, Func<T, ContextMenuEventArgs, bool>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnContextMenu<T>(T, System.Func<T, DrawnUi.Draw.ContextMenuEventArgs, bool>)
+  nameWithType.vb: FluentExtensions.OnContextMenu(Of T)(T, Func(Of T, ContextMenuEventArgs, Boolean))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnContextMenu(Of T)(T, System.Func(Of T, DrawnUi.Draw.ContextMenuEventArgs, Boolean))
+  name.vb: OnContextMenu(Of T)(T, Func(Of T, ContextMenuEventArgs, Boolean))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
   - name: )
 - uid: DrawnUi.Draw.FluentExtensions.OnKeyDown``1(``0,System.Action{``0,DrawnUi.Draw.InputKey})

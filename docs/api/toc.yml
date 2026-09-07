@@ -337,6 +337,12 @@ items:
   - uid: DrawnUi.Draw.ContextArguments
     name: ContextArguments
     type: Enum
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    type: Class
+  - uid: DrawnUi.Draw.ContextMenuSource
+    name: ContextMenuSource
+    type: Enum
   - uid: DrawnUi.Draw.ContrastEffect
     name: ContrastEffect
     type: Class
