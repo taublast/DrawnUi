@@ -114,9 +114,9 @@ public static partial class WebInput
         {
             args.StartingLocation = _pointerDownArgs.StartingLocation;
 
-            // Check for tap: only the primary button (0) taps, a right / middle click still delivers Up
+            // Check for tap
             var threshold = TouchEffect.TappedCancelMoveThresholdPoints * Math.Max(0.1f, TouchEffect.Density);
-            if (button == 0 && Math.Abs(args.Distance.Total.X) < threshold && Math.Abs(args.Distance.Total.Y) < threshold)
+            if (Math.Abs(args.Distance.Total.X) < threshold && Math.Abs(args.Distance.Total.Y) < threshold)
             {
                 TargetCanvas?.OnGestureEvent(TouchActionType.Released, args, TouchActionResult.Tapped);
             }

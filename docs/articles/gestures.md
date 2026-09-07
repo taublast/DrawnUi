@@ -244,7 +244,7 @@ Built-in `AnimationTapped` values include:
 ## Context menu on the web (right click)
 
 On the web heads (Blazor, `DrawnUi.Wasm`) a right click over the canvas opens the browser's own menu ("Save image
-as…"). Right and middle clicks never fire `Tapped`; to take the request, set `ContextMenu` on any control. It is a
+as…"). To take the request, set `ContextMenu` on any control. It is a
 delegate that answers (like `OnGestures`), the same shape as in DrawnUi.React:
 
 ```csharp
@@ -264,7 +264,9 @@ parents. The first handler returning `true` takes it and the browser menu is sup
 the browser menu shows as usual. `ContextMenuEventArgs` carries `Source` (`Mouse` for a right click, `Touch` for a
 long press, `Keyboard` for the Menu key), `Local`, and the usual `Parameters` / `ProcessingInfo` of a tap. Under the
 hood it is the `TouchActionResult.ContextMenu` gesture, so `ConsumeGestures` and `ProcessGestures` overrides see it
-too. Other platforms never raise it. The same API exists in DrawnUi.React (`ContextMenu={(sender, e) => true}`).
+too. Every mouse button still goes through `Down` / `Up` / `Tapped` with `e.Parameters.Event.Pointer.Button`, so a
+right click is a `Tapped` with `Button == MouseButton.Right` and a `ContextMenu`; games keep their button data. Other
+platforms never raise it. The same API exists in DrawnUi.React (`ContextMenu={(sender, e) => true}`).
 
 ## Gesture locking and propagation
 
