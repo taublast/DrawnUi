@@ -192,6 +192,8 @@
     private int _pendingAutoCanvasWidthFrames;
     private int _pendingAutoCanvasHeightFrames;
     private bool _autoSizeRenderQueued;
+    private float _lastRenderedCanvasWidth;
+    private float _lastRenderedCanvasHeight;
     private bool _isComputingIntrinsicAutoSize;
     private SkiaControl? _cachedIntrinsicAutoCanvasContent;
     private ScaledSize? _cachedIntrinsicAutoCanvasSize;
@@ -274,6 +276,21 @@
             _reportedAutoCanvasWidth = AutoCanvasWidth;
             _reportedAutoCanvasHeight = AutoCanvasHeight;
             AccessibilityManager.Changed += OnA11yChanged;
+        }
+
+        // Resizing the html canvas resets its drawing buffer (blank), and under UpdateModeType.Dynamic
+        // nothing would necessarily repaint it. Request a frame right after the size landed in the DOM.
+        var renderedWidth = CanvasElementWidth;
+        var renderedHeight = CanvasElementHeight;
+        if (Math.Abs(renderedWidth - _lastRenderedCanvasWidth) > 0.01f
+            || Math.Abs(renderedHeight - _lastRenderedCanvasHeight) > 0.01f)
+        {
+            _lastRenderedCanvasWidth = renderedWidth;
+            _lastRenderedCanvasHeight = renderedHeight;
+            if (!firstRender)
+            {
+                Update();
+            }
         }
 
         if (CaptureInput)
@@ -813,6 +830,9 @@
         return true;
     }
 
+    private static float UnitsToPixels(float units, float scale)
+        => float.IsPositiveInfinity(units) ? units : units * scale;
+
     private ScaledSize? GetIntrinsicAutoCanvasSize()
     {
         if (Content == null || _isComputingIntrinsicAutoSize || Content.IsMeasuring)
@@ -832,7 +852,13 @@
         try
         {
             _isComputingIntrinsicAutoSize = true;
-            var measured = Content.Measure(widthConstraint, heightConstraint, scale);
+            // Measure takes PIXEL constraints, our constraints are in units:
+            // passing units measured the content at 1/scale of the real width, so labels wrapped
+            // an extra line and the auto-size host was reported too tall.
+            var measured = Content.Measure(
+                UnitsToPixels(widthConstraint, scale),
+                UnitsToPixels(heightConstraint, scale),
+                scale);
             _cachedIntrinsicAutoCanvasContent = Content;
             _cachedIntrinsicAutoCanvasSize = measured;
             _cachedIntrinsicAutoCanvasWidthConstraint = widthConstraint;

@@ -55,6 +55,7 @@ Supported hosts:
 
 ## What's New 1.10.6.7
 
+  * Blazor: auto-sized `Canvas` (no `HeightRequest`) measured its content with unit constraints where pixels were expected, so labels wrapped an extra line and the host was reported too tall; the first change that dirtied the content re-measured, the canvas element resized and its drawing buffer blanked for a frame (the "blink on first tap"). Canvas size floats are no longer splatted onto the html canvas as culture-formatted `width`/`height` attributes, and a canvas resize now requests a repaint under `UpdateModeType.Dynamic`.
   * SkiaLabel: built-in drop shadow size now cached properly
   * SkiaShell blur backdrop and modal animation fixed
   * Updated docs (https://drawnui.net)
