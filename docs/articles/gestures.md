@@ -241,11 +241,38 @@ Built-in `AnimationTapped` values include:
 - `Ripple`
 - `Fade`
 
-## Context menu on the web (right click)
+## Mouse buttons and the browser context menu
 
-On the web heads (Blazor, `DrawnUi.Wasm`) a right click over the canvas opens the browser's own menu ("Save image
-as…"). To take the request, set `ContextMenu` on any control. It is a
-delegate that answers (like `OnGestures`), the same shape as in DrawnUi.React:
+Every mouse button goes through the gesture pipeline: a right or middle click is a normal `Down` / `Up` / `Tapped`
+with the button in `e.Parameters.Event.Pointer` (`Button`, `ButtonNumber`, `DeviceType`, `PressedButtons`), on every
+platform, so games and custom controls keep their button data. Nothing in DrawnUI filters buttons; the app decides.
+
+On the web heads (Blazor, `DrawnUi.Wasm`) a right click does two more things a desktop app never sees: the browser
+opens its own menu over the canvas ("Save image as…", "Copy image"), and on touch a long press raises the same
+request. Two habits cover it:
+
+### 1. Act on the primary button only where that is what you mean
+
+A `Tapped` handler that opens a page or submits a form should ignore the other buttons:
+
+```csharp
+new SkiaShape { ... }
+    .OnTapped((shape, e) =>
+    {
+        var button = e.Parameters.Event.Pointer?.Button ?? MouseButton.Left; // touch and pen have no button
+        if (button != MouseButton.Left)
+            return;
+
+        OpenDetails();
+    });
+```
+
+The one-argument `OnTapped(view => …)` overload has no args; use the `(view, e)` overload when the button matters.
+
+### 2. Handle `ContextMenu` where you want your own menu
+
+`ContextMenu` is a delegate that answers, like `OnGestures`, the same shape as in DrawnUi.React: return `true` to
+take the request, the browser's menu is then suppressed; `false` or no handler and the browser menu shows as usual.
 
 ```csharp
 new SkiaShape { ... }
@@ -257,16 +284,33 @@ new SkiaShape { ... }
 
 // or directly
 shape.ContextMenu = (sender, e) => { ShowMyMenu(e.Local); return true; };
+
+// swallow the browser menu on a whole page: a handler on the root layout, nothing hit below it answers
+page.ContextMenu = (_, _) => true;
 ```
 
+It is a delegate property, not a C# event: one handler per control, set from code (no XAML attribute).
+
 The request is routed like a tap: the deepest hit control first (through transforms and scroll offsets), then its
-parents. The first handler returning `true` takes it and the browser menu is suppressed; `false` or no handler and
-the browser menu shows as usual. `ContextMenuEventArgs` carries `Source` (`Mouse` for a right click, `Touch` for a
-long press, `Keyboard` for the Menu key), `Local`, and the usual `Parameters` / `ProcessingInfo` of a tap. Under the
-hood it is the `TouchActionResult.ContextMenu` gesture, so `ConsumeGestures` and `ProcessGestures` overrides see it
-too. Every mouse button still goes through `Down` / `Up` / `Tapped` with `e.Parameters.Event.Pointer.Button`, so a
-right click is a `Tapped` with `Button == MouseButton.Right` and a `ContextMenu`; games keep their button data. Other
-platforms never raise it. The same API exists in DrawnUi.React (`ContextMenu={(sender, e) => true}`).
+parents; the first handler returning `true` wins. `ContextMenuEventArgs` carries `Source` (`Mouse` for a right
+click, `Touch` for a long press, `Keyboard` for the Menu key), `Local`, and the usual `Parameters` /
+`ProcessingInfo` of a tap. Under the hood it is the `TouchActionResult.ContextMenu` gesture (AppoMobi.Gestures
+3.11.0), so `ConsumeGestures` and `ProcessGestures` overrides see it too. A right click therefore arrives twice, as a
+`Tapped` with `Button == MouseButton.Right` and as a `ContextMenu`; that is by design, the two answer different
+questions. Other platforms never raise `ContextMenu`.
+
+Per head:
+
+- **Blazor** (`DrawnUi.Blazor.Wasm`): wired by `AppoMobi.Blazor.Gestures`. Up to 3.10.x the browser menu was always
+  suppressed over the canvas; from 3.11.0 it shows unless a handler takes it. Blazor Server keeps suppressing it (the
+  decision needs the synchronous JS → .NET call that WebAssembly has).
+- **`DrawnUi.Wasm`**: `RunAsync` wires it; hand-written `main.js` files pass `onContextMenu: Input.OnContextMenu` in
+  `setModuleExports`, see [DrawnUi.Wasm](web/index.md#gestures).
+- **Blazor sandbox**: the Gestures page (`/canvas-gestures`) shows both habits, taps print their button and the pad
+  takes the context menu while the card around it leaves the browser menu alone.
+
+Selectable text in the accessibility overlay (when the app opts a label in) belongs to the browser: a right click on
+selected text shows the browser's own copy menu, never a DrawnUI `ContextMenu`.
 
 ## Gesture locking and propagation
 
@@ -343,6 +387,8 @@ private void OnSwipe(object sender, SkiaGesturesInfo e)
 ```
 
 ### Long Press Menu
+
+On the web heads a long press on touch also raises `ContextMenu` (see [Mouse buttons and the browser context menu](#mouse-buttons-and-the-browser-context-menu)); handle that one there so the browser's menu does not open over yours.
 
 ```csharp
 private void OnLongPress(object sender, SkiaGesturesInfo e)

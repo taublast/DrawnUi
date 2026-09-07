@@ -72,7 +72,10 @@ A: Because the current shared browser static asset flow is still anchored on the
 
 This is an incremental packaging state in the repository, not the intended long-term consumer-facing mental model.
 
-**Q: What is supported today?**  
+**Q: Right click on the canvas opens the browser's "Save image as…" menu, and my `Tapped` fires too. What do I do?**
+A: Both are by design since AppoMobi.Blazor.Gestures 3.11.0. Every mouse button taps, so check `e.Parameters.Event.Pointer?.Button` in handlers that should react to the primary button only; and set `ContextMenu` on the control (or the page root) returning `true` to show your own menu and suppress the browser's. With no handler the browser menu shows. Before 3.11.0 it was always suppressed. Details and code: [Mouse buttons and the browser context menu](../gestures.md#mouse-buttons-and-the-browser-context-menu).
+
+**Q: What is supported today?**
 A: The current support split looks like this.
 
 **Strong current fit:**
