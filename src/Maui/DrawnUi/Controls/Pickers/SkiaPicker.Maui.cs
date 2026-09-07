@@ -1,10 +1,13 @@
-namespace DrawnUi.Controls;
+﻿namespace DrawnUi.Controls;
 
 public partial class SkiaPicker
 {
     private async partial Task<int?> ShowSelectionAsyncPlatform(string title, string cancelText, IReadOnlyList<string> options, int selectedIndex)
     {
-        var page = GetCurrentPage(Application.Current?.Windows.FirstOrDefault()?.Page);
+        // the sheet belongs to the window that owns this picker: with a second window open
+        // (a tool/inspector window) the first window is not where the user is looking
+        var ownerPage = (Superview as VisualElement)?.Window?.Page;
+        var page = GetCurrentPage(ownerPage ?? Application.Current?.Windows.FirstOrDefault()?.Page);
         if (page == null)
         {
             return null;
