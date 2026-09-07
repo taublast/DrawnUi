@@ -244,24 +244,23 @@ Built-in `AnimationTapped` values include:
 ## Context menu on the web (right click)
 
 On the web heads (Blazor, `DrawnUi.Wasm`) a right click over the canvas opens the browser's own menu ("Save image
-as…"). Right and middle clicks never fire `Tapped`; to take the request, handle `ContextMenu` on any control, the
-same way as `Tapped`:
+as…"). Right and middle clicks never fire `Tapped`; to take the request, set `ContextMenu` on any control. It is a
+delegate that answers (like `OnGestures`), the same shape as in DrawnUi.React:
 
 ```csharp
 new SkiaShape { ... }
     .OnContextMenu((shape, e) =>
     {
         ShowMyMenu(e.Local);   // point inside the control, in points
-        e.Handled = true;      // suppress the browser menu
+        return true;           // handled: the browser menu is suppressed
     });
-```
 
-```xml
-<draw:SkiaShape Type="Rectangle" ContextMenu="OnShapeContextMenu" />
+// or directly
+shape.ContextMenu = (sender, e) => { ShowMyMenu(e.Local); return true; };
 ```
 
 The request is routed like a tap: the deepest hit control first (through transforms and scroll offsets), then its
-parents. The first handler setting `e.Handled = true` takes it and the browser menu is suppressed; with no handler
+parents. The first handler returning `true` takes it and the browser menu is suppressed; `false` or no handler and
 the browser menu shows as usual. `ContextMenuEventArgs` carries `Source` (`Mouse` for a right click, `Touch` for a
 long press, `Keyboard` for the Menu key), `Local`, and the usual `Parameters` / `ProcessingInfo` of a tap. Under the
 hood it is the `TouchActionResult.ContextMenu` gesture, so `ConsumeGestures` and `ProcessGestures` overrides see it

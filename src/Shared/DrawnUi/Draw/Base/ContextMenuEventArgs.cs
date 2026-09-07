@@ -3,8 +3,8 @@ namespace DrawnUi.Draw
     /// <summary>
     /// Arguments of <see cref="SkiaControl.ContextMenu"/>: a context-menu request over the control — a right click, a
     /// long press on touch (browsers raise it), or the keyboard Menu key. Web heads only (Blazor, Wasm); other
-    /// platforms never raise it. Set <see cref="Handled"/> to true to take the request: the browser's own canvas
-    /// menu ("Save image as…") is then suppressed. Leave it false and the browser menu shows as usual.
+    /// platforms never raise it. The handler returns true to take the request: the browser's own canvas menu
+    /// ("Save image as…") is then suppressed; false and the browser menu shows as usual.
     /// </summary>
     public class ContextMenuEventArgs : ControlTappedEventArgs
     {
@@ -12,11 +12,6 @@ namespace DrawnUi.Draw
             : base(control, args, info)
         {
         }
-
-        /// <summary>
-        /// Set to true to take the request; the platform's own menu is suppressed. Default false.
-        /// </summary>
-        public bool Handled { get; set; }
 
         /// <summary>
         /// Where the request came from: Mouse (right click), Touch / Pen (long press), Keyboard (Menu key).

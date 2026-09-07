@@ -1954,9 +1954,9 @@ namespace DrawnUi.Draw
         /// <param name="useMainThread"></param>
         /// <returns></returns>
         /// <summary>
-        /// Raises <see cref="ContextMenu"/> for a <see cref="TouchActionResult.ContextMenu"/> gesture that no child
-        /// consumed. Returns true when a handler took it (<see cref="ContextMenuEventArgs.Handled"/>); the platform
-        /// args are then marked Handled so the host suppresses the browser menu.
+        /// Calls <see cref="ContextMenu"/> for a <see cref="TouchActionResult.ContextMenu"/> gesture that no child
+        /// consumed. Returns true when the handler took it (returned true); the platform args are then marked
+        /// Handled so the host suppresses the browser menu.
         /// </summary>
         protected bool SendContextMenu(object listener, SkiaGesturesParameters args, GestureEventProcessingInfo apply)
         {
@@ -1975,14 +1975,14 @@ namespace DrawnUi.Draw
                     new PointF(apply.MappedLocation.X, apply.MappedLocation.Y), apply.ChildOffset)
             };
 
-            ContextMenu.Invoke(this, e);
+            var handled = ContextMenu.Invoke(this, e);
 
-            if (e.Handled && args.Event != null)
+            if (handled && args.Event != null)
             {
                 args.Event.Handled = true;
             }
 
-            return e.Handled;
+            return handled;
         }
 
         protected bool SendTapped(object listener, SkiaGesturesParameters args, GestureEventProcessingInfo apply,
@@ -2114,11 +2114,12 @@ namespace DrawnUi.Draw
 
         /// <summary>
         /// Context-menu request over this control: a right click, a long press on touch, or the keyboard Menu key.
-        /// Routed like a tap (deepest hit child first, then parents); the first handler that sets
-        /// <see cref="ContextMenuEventArgs.Handled"/> takes it and the browser's own canvas menu is suppressed, with
-        /// no handler the browser menu shows. Raised by the web heads (Blazor, Wasm) only.
+        /// A delegate rather than an event (like <see cref="OnGestures"/>) so it can answer, same shape as
+        /// DrawnUi.React: return true to take the request, the browser's own canvas menu is then suppressed;
+        /// return false or leave it null and the browser menu shows. Routed like a tap: deepest hit child first,
+        /// then parents. Called by the web heads (Blazor, Wasm) only.
         /// </summary>
-        public event EventHandler<ContextMenuEventArgs> ContextMenu;
+        public Func<SkiaControl, ContextMenuEventArgs, bool> ContextMenu { get; set; }
 
         /// <summary>
         /// Gestures event handler for fast access. To mark a gesture as consumed set `e.Consumed` to `true` inside a synchronous (!) event handler.
