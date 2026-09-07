@@ -164,7 +164,7 @@ _dragTarget.TranslationY += e.Args.Event.Distance.Delta.Y / scale;
                                 {
                                     UseCache = SkiaCacheType.Operations,
                                     IsParentIndependent = true,
-                                    Text = "Tap anywhere, drag the amber block, and use pointer or wheel on the same surface.",
+                                    Text = "Tap anywhere (any mouse button, the tap shows which), right-click for ContextMenu, drag the amber block, use pointer or wheel.",
                                     FontFamily = "FontText",
                                     FontSize = 14,
                                     TextColor = new Color(0.388f, 0.435f, 0.502f, 1f),
@@ -193,6 +193,14 @@ _dragTarget.TranslationY += e.Args.Event.Distance.Delta.Y / scale;
         };
 
         _gesturePad.Tapped += OnGesturePadTapped;
+        // right click / long press / Menu key: return true = handled, the browser's own menu stays away;
+        // on the white card above the pad nothing handles it and the browser menu shows
+        _gesturePad.ContextMenu = (_, e) =>
+        {
+            _gestureStatus.Text = $"Gesture pad: ContextMenu ({e.Source}) at {e.Local.X:0},{e.Local.Y:0}";
+            PushHistory($"ContextMenu {e.Source} {e.Local.X:0},{e.Local.Y:0}");
+            return true;
+        };
         _gesturePad.ConsumeGestures += OnGesturePadGestures;
 
         _canvasContent = new SkiaLayout()
@@ -253,8 +261,9 @@ _dragTarget.TranslationY += e.Args.Event.Distance.Delta.Y / scale;
     private void OnGesturePadTapped(object? sender, ControlTappedEventArgs e)
     {
         _heroLabel.Text = "Canvas gestures live";
-        _gestureStatus.Text = $"Gesture pad: tapped at {e.Parameters.Event.Location.X:0},{e.Parameters.Event.Location.Y:0}";
-        PushHistory($"Tapped {e.Parameters.Event.Location.X:0},{e.Parameters.Event.Location.Y:0}");
+        var button = e.Parameters.Event.Pointer?.Button.ToString() ?? "Touch";
+        _gestureStatus.Text = $"Gesture pad: tapped ({button}) at {e.Parameters.Event.Location.X:0},{e.Parameters.Event.Location.Y:0}";
+        PushHistory($"Tapped {button} {e.Parameters.Event.Location.X:0},{e.Parameters.Event.Location.Y:0}");
     }
 
     private void OnGesturePadGestures(object? sender, SkiaGesturesInfo e)
