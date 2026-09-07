@@ -1,4 +1,4 @@
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace DrawnUi.Draw
 {
@@ -80,7 +80,8 @@ namespace DrawnUi.Draw
                 string text = SpanToStringForCache(textSpan);
 
                 // Check cache first
-                if (GlyphMeasurementCache.TryGetValue(paintTypeface, needsShaping, text, out var cachedResult))
+                // plain advance measure: no character spacing in this path
+                if (GlyphMeasurementCache.TryGetValue(paintTypeface, font, needsShaping, 0f, text, out var cachedResult))
                 {
                     return cachedResult.Width;
                 }
