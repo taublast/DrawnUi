@@ -1,4 +1,4 @@
-﻿using DrawnUi;
+using DrawnUi;
 
 namespace DrawnUi.Draw
 {
