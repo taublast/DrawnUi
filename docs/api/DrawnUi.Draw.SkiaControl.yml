@@ -140,6 +140,7 @@ items:
   - DrawnUi.Draw.SkiaControl.Contains(Microsoft.Maui.IView)
   - DrawnUi.Draw.SkiaControl.ContentSize
   - DrawnUi.Draw.SkiaControl.ContextIndex
+  - DrawnUi.Draw.SkiaControl.ContextMenu
   - DrawnUi.Draw.SkiaControl.ContractPixelsRect(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.ContractPixelsRect(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
   - DrawnUi.Draw.SkiaControl.ControlStyle
@@ -542,6 +543,7 @@ items:
   - DrawnUi.Draw.SkiaControl.SafeAction(System.Action,System.Int64)
   - DrawnUi.Draw.SkiaControl.Scale
   - DrawnUi.Draw.SkiaControl.ScaleToAsync(System.Double,System.Double,System.Single,Microsoft.Maui.Easing,System.Threading.CancellationTokenSource)
+  - DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.SendLongPressing(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   - DrawnUi.Draw.SkiaControl.SendOnMeasured
   - DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
@@ -964,6 +966,7 @@ items:
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.FluentExtensions.Observe``2(System.Func{{TSource}},System.Action{DrawnUi.Draw.SkiaControl},System.String[])
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.SkiaControl,System.String},System.String[])
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Draw.SkiaControl},System.String[])
+  - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.FluentExtensions.OnContextMenu``1(System.Func{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.FluentExtensions.OnKeyDown``1(System.Action{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.InputKey})
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.FluentExtensions.OnKeyUp``1(System.Action{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.InputKey})
   - DrawnUi.Draw.SkiaControl.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Draw.SkiaControl})
@@ -8475,6 +8478,50 @@ items:
       type: System.Boolean
     content.vb: Public Property SkipRenderingOutOfBounds As Boolean
   overload: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds*
+- uid: DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  id: SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.SkiaControl
+  langs:
+  - csharp
+  - vb
+  name: SendContextMenu(object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: SkiaControl.SendContextMenu(object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaControl.SendContextMenu(object, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: SendContextMenu
+    path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
+    startLine: 1960
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: If Tapped handler was defined, activates it and return true of false it was defined.
+  example: []
+  syntax:
+    content: protected bool SendContextMenu(object listener, SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+    parameters:
+    - id: listener
+      type: System.Object
+      description: ''
+    - id: args
+      type: DrawnUi.Draw.SkiaGesturesParameters
+      description: ''
+    - id: apply
+      type: DrawnUi.Draw.GestureEventProcessingInfo
+      description: ''
+    return:
+      type: System.Boolean
+      description: ''
+    content.vb: Protected Function SendContextMenu(listener As Object, args As SkiaGesturesParameters, apply As GestureEventProcessingInfo) As Boolean
+  overload: DrawnUi.Draw.SkiaControl.SendContextMenu*
+  nameWithType.vb: SkiaControl.SendContextMenu(Object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SendContextMenu(Object, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  name.vb: SendContextMenu(Object, SkiaGesturesParameters, GestureEventProcessingInfo)
 - uid: DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   id: SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
@@ -8493,30 +8540,23 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SendTapped
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 1955
+    startLine: 1987
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
-  summary: If Tapped handler was defined, activates it and return true of false it was defined.
-  example: []
   syntax:
     content: protected bool SendTapped(object listener, SkiaGesturesParameters args, GestureEventProcessingInfo apply, bool useMainThread)
     parameters:
     - id: listener
       type: System.Object
-      description: ''
     - id: args
       type: DrawnUi.Draw.SkiaGesturesParameters
-      description: ''
     - id: apply
       type: DrawnUi.Draw.GestureEventProcessingInfo
-      description: ''
     - id: useMainThread
       type: System.Boolean
-      description: ''
     return:
       type: System.Boolean
-      description: ''
     content.vb: Protected Function SendTapped(listener As Object, args As SkiaGesturesParameters, apply As GestureEventProcessingInfo, useMainThread As Boolean) As Boolean
   overload: DrawnUi.Draw.SkiaControl.SendTapped*
   nameWithType.vb: SkiaControl.SendTapped(Object, SkiaGesturesParameters, GestureEventProcessingInfo, Boolean)
@@ -8540,7 +8580,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SendLongPressing
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2004
+    startLine: 2036
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8585,7 +8625,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ChildTapped
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2027
+    startLine: 2059
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8614,7 +8654,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TransformPointToLocalSpace
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2029
+    startLine: 2061
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8645,7 +8685,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsGestureInside
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2047
+    startLine: 2079
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8676,7 +8716,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnGestures
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2071
+    startLine: 2103
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8705,7 +8745,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Tapped
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2078
+    startLine: 2110
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8739,7 +8779,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LongPressing
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2080
+    startLine: 2112
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8748,6 +8788,46 @@ items:
     return:
       type: System.EventHandler{DrawnUi.Draw.ControlTappedEventArgs}
     content.vb: Public Event LongPressing As EventHandler(Of ControlTappedEventArgs)
+- uid: DrawnUi.Draw.SkiaControl.ContextMenu
+  commentId: P:DrawnUi.Draw.SkiaControl.ContextMenu
+  id: ContextMenu
+  parent: DrawnUi.Draw.SkiaControl
+  langs:
+  - csharp
+  - vb
+  name: ContextMenu
+  nameWithType: SkiaControl.ContextMenu
+  fullName: DrawnUi.Draw.SkiaControl.ContextMenu
+  type: Property
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: ContextMenu
+    path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
+    startLine: 2121
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Context-menu request over this control: a right click, a long press on touch, or the keyboard Menu key.
+
+    A delegate rather than an event (like <xref href="DrawnUi.Draw.SkiaControl.OnGestures" data-throw-if-not-resolved="false"></xref>) so it can answer, same shape as
+
+    DrawnUi.React: return true to take the request, the browser's own canvas menu is then suppressed;
+
+    return false or leave it null and the browser menu shows. Routed like a tap: deepest hit child first,
+
+    then parents. Called by the web heads (Blazor, Wasm) only.
+  example: []
+  syntax:
+    content: public Func<SkiaControl, ContextMenuEventArgs, bool> ContextMenu { get; set; }
+    parameters: []
+    return:
+      type: System.Func{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean}
+    content.vb: Public Property ContextMenu As Func(Of SkiaControl, ContextMenuEventArgs, Boolean)
+  overload: DrawnUi.Draw.SkiaControl.ContextMenu*
 - uid: DrawnUi.Draw.SkiaControl.ConsumeGestures
   commentId: E:DrawnUi.Draw.SkiaControl.ConsumeGestures
   id: ConsumeGestures
@@ -8766,7 +8846,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ConsumeGestures
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2086
+    startLine: 2127
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8798,7 +8878,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnChildTapped
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2094
+    startLine: 2135
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8836,7 +8916,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetGesturePositionInsideChild
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2114
+    startLine: 2155
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8878,7 +8958,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CheckChildGestureHit
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2260
+    startLine: 2301
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8919,7 +8999,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CheckHovered
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2324
+    startLine: 2365
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8950,7 +9030,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ProcessGestures
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2338
+    startLine: 2379
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -8983,7 +9063,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: BlockGesturesBelowProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2699
+    startLine: 2748
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9010,7 +9090,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: BlockGesturesBelow
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2706
+    startLine: 2755
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9043,7 +9123,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UpdateLocks
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2712
+    startLine: 2761
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9075,7 +9155,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UnlockUpdate
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2714
+    startLine: 2763
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9101,7 +9181,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LockUpdate
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2719
+    startLine: 2768
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9133,7 +9213,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NativeParent
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2740
+    startLine: 2789
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9162,7 +9242,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ParentProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2745
+    startLine: 2794
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9189,7 +9269,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Parent
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2755
+    startLine: 2804
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9222,7 +9302,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AlignContentVerticalProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2761
+    startLine: 2810
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9249,7 +9329,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AlignContentVertical
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2768
+    startLine: 2817
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9278,7 +9358,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AlignContentHorizontalProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2774
+    startLine: 2823
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9305,7 +9385,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AlignContentHorizontal
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2781
+    startLine: 2830
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9334,7 +9414,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: VerticalOptionsProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2789
+    startLine: 2838
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9361,7 +9441,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: VerticalOptions
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2796
+    startLine: 2845
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9393,7 +9473,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HorizontalOptionsProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2802
+    startLine: 2851
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9420,7 +9500,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HorizontalOptions
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2809
+    startLine: 2858
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9452,7 +9532,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnParentVisibilityChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2820
+    startLine: 2869
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9487,7 +9567,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PropagateVisibilityChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2864
+    startLine: 2913
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9519,7 +9599,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: VisibilityChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2879
+    startLine: 2928
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9546,7 +9626,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ParentVisibilityChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2881
+    startLine: 2930
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9573,7 +9653,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SendVisibilityChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2883
+    startLine: 2932
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9599,7 +9679,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnVisibilityChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2892
+    startLine: 2941
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9634,7 +9714,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnDisposing
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2968
+    startLine: 3017
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9662,7 +9742,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: lockPausingAnimators
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2980
+    startLine: 3029
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9689,7 +9769,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PauseAllAnimators
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2982
+    startLine: 3031
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9715,7 +9795,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ResumePausedAnimators
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2987
+    startLine: 3036
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9741,7 +9821,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsGhostProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2992
+    startLine: 3041
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9768,7 +9848,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsGhost
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 2998
+    startLine: 3047
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9801,7 +9881,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IgnoreChildrenInvalidationsProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3004
+    startLine: 3053
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9828,7 +9908,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IgnoreChildrenInvalidations
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3009
+    startLine: 3058
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9857,7 +9937,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FillGradientProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3017
+    startLine: 3066
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9884,7 +9964,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FillGradient
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3042
+    startLine: 3091
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9913,7 +9993,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HasFillGradient
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3048
+    startLine: 3097
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9942,7 +10022,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetSizeRequest
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3055
+    startLine: 3104
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9980,7 +10060,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SmartMax
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3077
+    startLine: 3126
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10016,7 +10096,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SmartMin
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3085
+    startLine: 3134
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10052,7 +10132,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ViewportHeightLimitProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3093
+    startLine: 3142
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10079,7 +10159,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ViewportHeightLimit
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3102
+    startLine: 3151
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10110,7 +10190,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ViewportWidthLimitProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3108
+    startLine: 3157
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10137,7 +10217,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ViewportWidthLimit
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3117
+    startLine: 3166
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10168,7 +10248,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Height
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3125
+    startLine: 3174
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10200,7 +10280,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Width
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3140
+    startLine: 3189
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10232,7 +10312,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Scale
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3156
+    startLine: 3205
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10263,7 +10343,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TagProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3166
+    startLine: 3215
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10290,7 +10370,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Tag
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3172
+    startLine: 3221
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10323,7 +10403,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LockRatioProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3178
+    startLine: 3227
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10350,7 +10430,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LockRatio
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3186
+    startLine: 3235
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10381,7 +10461,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HeightRequestRatioProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3192
+    startLine: 3241
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10408,7 +10488,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HeightRequestRatio
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3202
+    startLine: 3251
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10439,7 +10519,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WidthRequestRatioProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3208
+    startLine: 3257
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10466,7 +10546,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WidthRequestRatio
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3218
+    startLine: 3267
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10497,7 +10577,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HorizontalFillRatioProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3224
+    startLine: 3273
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10524,7 +10604,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HorizontalFillRatio
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3234
+    startLine: 3283
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10555,7 +10635,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: VerticalFillRatioProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3240
+    startLine: 3289
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10582,7 +10662,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: VerticalFillRatio
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3250
+    startLine: 3299
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10613,7 +10693,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HorizontalPositionOffsetRatioProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3256
+    startLine: 3305
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10640,7 +10720,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HorizontalPositionOffsetRatio
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3263
+    startLine: 3312
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10669,7 +10749,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: VerticalPositionOffsetRatioProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3269
+    startLine: 3318
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10696,7 +10776,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: VerticalPositionOffsetRatio
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3276
+    startLine: 3325
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10725,7 +10805,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FillBlendModeProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3282
+    startLine: 3331
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10752,7 +10832,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FillBlendMode
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3287
+    startLine: 3336
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10781,7 +10861,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SkewXProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3363
+    startLine: 3412
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10808,7 +10888,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SkewX
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3368
+    startLine: 3417
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10837,7 +10917,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SkewYProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3374
+    startLine: 3423
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10864,7 +10944,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SkewY
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3379
+    startLine: 3428
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10893,7 +10973,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TranslationZProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3385
+    startLine: 3434
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10920,7 +11000,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TranslationZ
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3394
+    startLine: 3443
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10952,7 +11032,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RotationZProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3400
+    startLine: 3449
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -10979,7 +11059,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RotationZ
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3409
+    startLine: 3458
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11011,7 +11091,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Perspective1Property
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3439
+    startLine: 3488
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11038,7 +11118,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Perspective1
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3444
+    startLine: 3493
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11067,7 +11147,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Perspective2Property
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3450
+    startLine: 3499
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11094,7 +11174,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Perspective2
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3455
+    startLine: 3504
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11123,7 +11203,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ParentChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3502
+    startLine: 3551
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11150,7 +11230,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FastMeasurementProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3505
+    startLine: 3554
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11177,7 +11257,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FastMeasurement
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3516
+    startLine: 3565
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11211,7 +11291,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AdjustClippingProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3522
+    startLine: 3571
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11238,7 +11318,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AdjustClipping
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3529
+    startLine: 3578
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11267,7 +11347,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PaddingProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3535
+    startLine: 3584
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11294,7 +11374,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Padding
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3539
+    startLine: 3588
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11326,7 +11406,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UsePadding
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3545
+    startLine: 3594
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11355,7 +11435,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MarginProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3547
+    startLine: 3596
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11382,7 +11462,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Margin
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3551
+    startLine: 3600
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11414,7 +11494,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddMarginTopProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3557
+    startLine: 3606
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11441,7 +11521,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddMarginTop
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3563
+    startLine: 3612
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11470,7 +11550,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddMarginBottomProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3569
+    startLine: 3618
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11497,7 +11577,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddMarginBottom
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3575
+    startLine: 3624
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11526,7 +11606,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddMarginLeftProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3581
+    startLine: 3630
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11553,7 +11633,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddMarginLeft
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3587
+    startLine: 3636
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11582,7 +11662,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddMarginRightProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3593
+    startLine: 3642
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11609,7 +11689,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddMarginRight
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3599
+    startLine: 3648
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11638,7 +11718,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Margins
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3608
+    startLine: 3657
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11669,7 +11749,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SpacingProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3619
+    startLine: 3668
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11696,7 +11776,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Spacing
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3625
+    startLine: 3674
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11725,7 +11805,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddTranslationYProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3631
+    startLine: 3680
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11752,7 +11832,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddTranslationY
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3637
+    startLine: 3686
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11781,7 +11861,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddTranslationXProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3643
+    startLine: 3692
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11808,7 +11888,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddTranslationX
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3649
+    startLine: 3698
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11837,7 +11917,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ExpandDirtyRegionProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3655
+    startLine: 3704
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11864,7 +11944,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ExpandDirtyRegion
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3671
+    startLine: 3720
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11908,7 +11988,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LockFocusProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3677
+    startLine: 3726
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11935,7 +12015,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LockFocus
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3681
+    startLine: 3730
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11967,7 +12047,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CanBeFocusedProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3687
+    startLine: 3736
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -11994,7 +12074,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CanBeFocused
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3698
+    startLine: 3747
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12034,7 +12114,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsClippedToBoundsProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3704
+    startLine: 3753
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12061,7 +12141,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsClippedToBounds
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3712
+    startLine: 3761
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12094,7 +12174,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ClipEffectsProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3718
+    startLine: 3767
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12121,7 +12201,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ClipEffects
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3725
+    startLine: 3774
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12154,7 +12234,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: BindableTriggerProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3731
+    startLine: 3780
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12181,7 +12261,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnTriggerChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3745
+    startLine: 3794
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12207,7 +12287,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: BindableTrigger
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3749
+    startLine: 3798
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12236,7 +12316,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Value1Property
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3755
+    startLine: 3804
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12263,7 +12343,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Value1
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3763
+    startLine: 3812
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12294,7 +12374,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Value2Property
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3769
+    startLine: 3818
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12321,7 +12401,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Value2
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3777
+    startLine: 3826
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12352,7 +12432,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Value3Property
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3783
+    startLine: 3832
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12379,7 +12459,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Value3
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3788
+    startLine: 3837
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12408,7 +12488,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Value4Property
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3797
+    startLine: 3846
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12435,7 +12515,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Value4
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3802
+    startLine: 3851
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12464,7 +12544,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RenderingScaleProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3808
+    startLine: 3857
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12491,7 +12571,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RenderingScale
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3820
+    startLine: 3869
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12523,7 +12603,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RenderedAtDestination
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3869
+    startLine: 3918
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12555,7 +12635,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnScaleChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3872
+    startLine: 3921
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12581,7 +12661,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetPropertyValue
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3898
+    startLine: 3947
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12615,7 +12695,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Uid
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3903
+    startLine: 3952
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12647,7 +12727,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DegreesToRadians
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3907
+    startLine: 3956
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12681,7 +12761,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RadiansToDegrees
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3912
+    startLine: 3961
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12715,7 +12795,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DegreesToRadians
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3917
+    startLine: 3966
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12749,7 +12829,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RadiansToDegrees
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3922
+    startLine: 3971
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12783,7 +12863,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LinearGradientAngleToPoints
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3927
+    startLine: 3976
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12817,7 +12897,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DisposalDelay
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3967
+    startLine: 4016
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12844,7 +12924,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsAlive
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3969
+    startLine: 4018
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12876,7 +12956,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DisposeObject
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3971
+    startLine: 4020
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12902,7 +12982,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DisposeObject
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 3980
+    startLine: 4029
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12941,7 +13021,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnSizeChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4032
+    startLine: 4081
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12967,7 +13047,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Clipping
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4036
+    startLine: 4085
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -12999,7 +13079,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Hero
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4041
+    startLine: 4090
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13030,7 +13110,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ContextIndex
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4046
+    startLine: 4095
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13061,7 +13141,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsRootView
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4048
+    startLine: 4097
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13089,7 +13169,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DefineAvailableSize
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4061
+    startLine: 4110
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13138,7 +13218,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsLayoutDirty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4132
+    startLine: 4181
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13169,7 +13249,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SnapToPixel
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4143
+    startLine: 4192
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13205,7 +13285,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SnapSizeToPixel
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4148
+    startLine: 4197
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13241,7 +13321,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SnapPointToPixel
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4154
+    startLine: 4203
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13277,7 +13357,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SnapRectCenter
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4160
+    startLine: 4209
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13313,7 +13393,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SnapRectToPixels
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4175
+    startLine: 4224
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13349,7 +13429,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RoundCenterAlignment
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4185
+    startLine: 4234
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13376,7 +13456,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CalculateLayout
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4196
+    startLine: 4245
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13422,7 +13502,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ContentSize
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4380
+    startLine: 4429
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13451,7 +13531,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WasMeasured
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4393
+    startLine: 4442
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13480,7 +13560,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnDrawingSizeChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4395
+    startLine: 4444
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13506,7 +13586,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AdaptCachedLayout
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4399
+    startLine: 4448
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13540,7 +13620,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _lastMeasuredForWidth
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4419
+    startLine: 4468
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13569,7 +13649,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _lastMeasuredForHeight
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4420
+    startLine: 4469
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13598,7 +13678,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DrawingRect
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4425
+    startLine: 4474
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13631,7 +13711,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DirtyRegion
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4447
+    startLine: 4496
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13660,7 +13740,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HitIsInside
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4462
+    startLine: 4511
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13700,7 +13780,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HitBoxAuto
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4488
+    startLine: 4537
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13742,7 +13822,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsGestureForChild
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4498
+    startLine: 4547
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13775,7 +13855,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsGestureForChild
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4503
+    startLine: 4552
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13813,7 +13893,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplyTransforms
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4514
+    startLine: 4563
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13848,7 +13928,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetTransformedDirtyBounds
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4528
+    startLine: 4577
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13885,7 +13965,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RenderTransformMatrix
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4566
+    startLine: 4615
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13916,7 +13996,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InverseRenderTransformMatrix
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4571
+    startLine: 4620
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13947,7 +14027,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplyTransformationMatrix
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4581
+    startLine: 4630
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -13976,7 +14056,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CreateTransformationMatrix
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4587
+    startLine: 4636
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14007,7 +14087,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplyTransforms
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4671
+    startLine: 4720
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14038,7 +14118,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TranslateInputDirectOffsetToPoints
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4753
+    startLine: 4802
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14071,7 +14151,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TranslateInputOffsetToPixels
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4763
+    startLine: 4812
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14104,7 +14184,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetHitBoxOnCanvas
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4769
+    startLine: 4818
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14132,7 +14212,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TranslateInputCoords
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4791
+    startLine: 4840
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14175,7 +14255,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CalculatePositionOffset
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4819
+    startLine: 4868
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14213,7 +14293,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CalculateFuturePositionOffset
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4847
+    startLine: 4896
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14251,7 +14331,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ArrangedDestination
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4876
+    startLine: 4925
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14280,7 +14360,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LayoutIsReady
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4878
+    startLine: 4927
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14307,7 +14387,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Disposing
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4879
+    startLine: 4928
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14334,7 +14414,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnLayoutReady
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4884
+    startLine: 4933
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14362,7 +14442,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UnregisterAccessibility
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4911
+    startLine: 4960
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14388,7 +14468,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AccessibilityChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4917
+    startLine: 4966
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14414,7 +14494,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AccessibilityRole
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4930
+    startLine: 4979
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14447,7 +14527,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AccessibilityLabel
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4944
+    startLine: 4993
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14480,7 +14560,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AccessibilityHint
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4958
+    startLine: 5007
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14513,7 +14593,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsAccessibilityElement
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4971
+    startLine: 5020
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14546,7 +14626,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetAccessibilityPixelRect
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4973
+    startLine: 5022
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14581,7 +14661,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AccessibilityCanInteract
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4977
+    startLine: 5026
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14617,7 +14697,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AccessibilityIsPressed
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 4991
+    startLine: 5040
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14650,7 +14730,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AccessibilityLive
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5005
+    startLine: 5054
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14688,7 +14768,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnAccessibilityUnregistered
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5020
+    startLine: 5069
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14718,7 +14798,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnAccessibilityActivated
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5029
+    startLine: 5078
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14751,7 +14831,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnAccessibilityFocused
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5049
+    startLine: 5098
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14794,7 +14874,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NotifyAccessibility
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5054
+    startLine: 5103
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14824,7 +14904,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NotifyAccessibilityFocused
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5076
+    startLine: 5125
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14863,7 +14943,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsLayoutReady
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5089
+    startLine: 5138
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14894,7 +14974,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LayoutReady
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5091
+    startLine: 5140
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14923,7 +15003,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CheckIsGhost
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5110
+    startLine: 5159
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14951,7 +15031,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Layout
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5121
+    startLine: 5170
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -14989,7 +15069,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Layout
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5133
+    startLine: 5182
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15035,7 +15115,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Layout
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5144
+    startLine: 5193
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15081,7 +15161,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Arrange
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5157
+    startLine: 5206
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15127,7 +15207,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ArrangeCache
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5200
+    startLine: 5249
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15172,7 +15252,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PostArrange
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5222
+    startLine: 5271
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15210,7 +15290,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MeasureChild
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5299
+    startLine: 5348
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15257,7 +15337,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MeasureContent
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5321
+    startLine: 5370
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15301,7 +15381,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MeasureContentCore
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5409
+    startLine: 5458
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15341,7 +15421,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetInheritedBindingContext
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5711
+    startLine: 5760
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15381,7 +15461,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplyBindingContext
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5722
+    startLine: 5771
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15409,7 +15489,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplyingBindingContext
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5740
+    startLine: 5789
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15436,7 +15516,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: BindingContextWasSet
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5741
+    startLine: 5790
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15465,7 +15545,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ExistingCacheWasRendered
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5742
+    startLine: 5791
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15494,7 +15574,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnBindingContextChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5747
+    startLine: 5796
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15523,7 +15603,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MeasureInternal
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5775
+    startLine: 5824
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15554,7 +15634,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Measure
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5802
+    startLine: 5851
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15600,7 +15680,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UpdateSizeRequest
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5827
+    startLine: 5876
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15628,7 +15708,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnMeasuring
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5848
+    startLine: 5897
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15672,7 +15752,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AvoidRemeasuring
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5892
+    startLine: 5941
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15703,7 +15783,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InitializeDefaultContent
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5906
+    startLine: 5955
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15738,7 +15818,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetMeasuredAsEmpty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5926
+    startLine: 5975
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15772,7 +15852,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetContentSizeForAutosizeInPixels
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5935
+    startLine: 5984
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15803,7 +15883,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetMeasuredAdaptToContentSize
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5942
+    startLine: 5991
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15839,7 +15919,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetSizeInPoints
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5971
+    startLine: 6020
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15875,7 +15955,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CreateMeasureRequest
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 5997
+    startLine: 6046
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15922,7 +16002,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetMeasuringRectForChildren
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6070
+    startLine: 6119
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -15960,7 +16040,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MeasureAbsolute
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6096
+    startLine: 6145
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16001,7 +16081,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MeasureAbsoluteBase
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6108
+    startLine: 6157
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16045,7 +16125,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ContractPixelsRect
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6135
+    startLine: 6184
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16081,7 +16161,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ContractPixelsRect
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6145
+    startLine: 6194
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16119,7 +16199,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ExpandPixelsRect
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6155
+    startLine: 6204
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16157,7 +16237,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetDrawingRectForChildren
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6165
+    startLine: 6214
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16193,7 +16273,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetDrawingRectWithMargins
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6183
+    startLine: 6232
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16229,7 +16309,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: lockMeasured
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6224
+    startLine: 6273
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16256,7 +16336,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsMeasuring
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6230
+    startLine: 6279
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16287,7 +16367,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LockMeasure
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6232
+    startLine: 6281
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16314,7 +16394,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetMeasured
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6241
+    startLine: 6290
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16362,7 +16442,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SendOnMeasured
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6283
+    startLine: 6332
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16388,7 +16468,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnMeasured
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6289
+    startLine: 6338
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16414,7 +16494,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Measured
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6297
+    startLine: 6346
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16443,7 +16523,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MeasuredSize
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6299
+    startLine: 6348
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16475,7 +16555,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedAutoSize
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6301
+    startLine: 6350
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16504,7 +16584,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedAutoHeight
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6306
+    startLine: 6355
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16533,7 +16613,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedAutoWidth
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6314
+    startLine: 6363
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16562,7 +16642,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedFillX
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6322
+    startLine: 6371
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16591,7 +16671,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedFillY
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6327
+    startLine: 6376
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16620,7 +16700,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsDisposed
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6334
+    startLine: 6383
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16652,7 +16732,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsDisposing
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6349
+    startLine: 6398
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16684,7 +16764,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedDispose
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6365
+    startLine: 6414
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16715,7 +16795,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FindView
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6367
+    startLine: 6416
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16751,7 +16831,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FindView
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6389
+    startLine: 6438
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16784,7 +16864,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FindViewByTag
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6408
+    startLine: 6457
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16818,7 +16898,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ExecuteUponDisposal
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6434
+    startLine: 6483
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16852,7 +16932,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ExecuteAfterCreated
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6439
+    startLine: 6488
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16883,7 +16963,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ExecuteOnPaint
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6441
+    startLine: 6490
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16912,7 +16992,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ThrowIfDisposed
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6446
+    startLine: 6495
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16940,7 +17020,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Dispose
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6459
+    startLine: 6508
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -16978,7 +17058,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnLifecycleStateChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6574
+    startLine: 6623
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17007,7 +17087,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LifecycleState
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6589
+    startLine: 6638
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17036,7 +17116,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Finalize
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6594
+    startLine: 6643
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17067,7 +17147,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Dispose
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6604
+    startLine: 6653
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17097,7 +17177,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PaintErase
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6612
+    startLine: 6661
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17124,7 +17204,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetNanoseconds
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6614
+    startLine: 6663
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17152,7 +17232,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnBeforeMeasure
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6626
+    startLine: 6675
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17181,7 +17261,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OptionalOnBeforeDrawing
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6630
+    startLine: 6679
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17210,7 +17290,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsOverlay
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6642
+    startLine: 6691
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17241,7 +17321,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PostAnimators
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6647
+    startLine: 6696
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17274,7 +17354,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UpdateWhenReturnedFromBackgroundProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6649
+    startLine: 6698
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17301,7 +17381,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UpdateWhenReturnedFromBackground
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6655
+    startLine: 6704
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17330,7 +17410,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnSuperviewShouldRenderChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6661
+    startLine: 6710
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17362,7 +17442,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplyMeasureResult
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6685
+    startLine: 6734
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17393,7 +17473,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedToMeasureSelf
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6689
+    startLine: 6738
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17421,7 +17501,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PreArrange
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6698
+    startLine: 6747
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17464,7 +17544,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MeasureSelf
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6730
+    startLine: 6779
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17508,7 +17588,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsRendering
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6755
+    startLine: 6804
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17537,7 +17617,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NodeAttached
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6756
+    startLine: 6805
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17566,7 +17646,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FindRenderedNode
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6758
+    startLine: 6807
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17597,7 +17677,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CreateRenderedNode
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6776
+    startLine: 6825
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17633,7 +17713,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Render
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6794
+    startLine: 6843
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17665,7 +17745,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RenderCount
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6842
+    startLine: 6891
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17692,7 +17772,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Rendered
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6844
+    startLine: 6893
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17719,7 +17799,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LockDraw
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6849
+    startLine: 6898
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17748,7 +17828,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LockRenderObject
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6854
+    startLine: 6903
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17777,7 +17857,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddPaintArguments
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6856
+    startLine: 6905
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17808,7 +17888,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnBeforeDrawing
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6861
+    startLine: 6910
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17837,7 +17917,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnAfterDrawing
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6875
+    startLine: 6924
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17866,7 +17946,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Draw
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6922
+    startLine: 6971
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17895,7 +17975,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: X
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6940
+    startLine: 6989
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17928,7 +18008,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Y
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6958
+    startLine: 7007
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17961,7 +18041,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FinalizeDrawingWithRenderObject
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6976
+    startLine: 7025
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -17993,7 +18073,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetPositionOffsetInPoints
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6980
+    startLine: 7029
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18021,7 +18101,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetPositionOffsetInPixels
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6988
+    startLine: 7037
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18059,7 +18139,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetFuturePositionOffsetInPixels
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6997
+    startLine: 7046
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18097,7 +18177,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetOffsetInsideControlInPoints
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7006
+    startLine: 7055
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18133,7 +18213,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetOffsetInsideControlInPixels
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7016
+    startLine: 7065
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18166,7 +18246,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LastDrawnAt
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7029
+    startLine: 7078
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18197,7 +18277,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ExecutePostAnimators
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7031
+    startLine: 7080
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18226,7 +18306,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DrawViews
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7070
+    startLine: 7119
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18264,7 +18344,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Repaint
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7080
+    startLine: 7129
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18294,7 +18374,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _paintWithEffects
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7090
+    startLine: 7139
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18321,7 +18401,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _paintWithOpacity
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7093
+    startLine: 7142
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18348,7 +18428,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CustomizeLayerPaint
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7104
+    startLine: 7153
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18379,7 +18459,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Helper3d
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7106
+    startLine: 7155
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18406,7 +18486,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DrawWithClipAndTransforms
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7108
+    startLine: 7157
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18446,7 +18526,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsSimpleRectangle
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7234
+    startLine: 7283
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18477,7 +18557,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ClipSmart
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7287
+    startLine: 7336
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18517,7 +18597,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ShouldClipAntialiased
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7297
+    startLine: 7346
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18551,7 +18631,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedMeasure
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7299
+    startLine: 7348
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18580,7 +18660,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SafeAction
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7323
+    startLine: 7372
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18620,7 +18700,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SyncUniqueAction
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7347
+    startLine: 7396
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18658,7 +18738,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CombineToLong
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7359
+    startLine: 7408
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18694,7 +18774,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ChildrenFactoryInitialize
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7376
+    startLine: 7425
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18721,7 +18801,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ChildrenFactoryInitializeSoft
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7377
+    startLine: 7426
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18748,7 +18828,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PostDrawAction
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7383
+    startLine: 7432
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18780,7 +18860,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedRemeasuring
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7399
+    startLine: 7448
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18807,7 +18887,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InvalidateShadowPaint
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7403
+    startLine: 7452
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18833,7 +18913,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PaintWithShadows
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7410
+    startLine: 7459
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18864,7 +18944,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PaintWithEffects
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7429
+    startLine: 7478
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18893,7 +18973,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Paint
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7514
+    startLine: 7563
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18930,7 +19010,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ExecuteOnPaintCallbacks
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7532
+    startLine: 7581
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18968,7 +19048,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnFirstDrawn
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7566
+    startLine: 7615
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -18994,7 +19074,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WasFirstTimeDrawn
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7571
+    startLine: 7620
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19021,7 +19101,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CreateClip
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7579
+    startLine: 7628
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19068,7 +19148,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ClipContentPath
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7599
+    startLine: 7648
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19100,7 +19180,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetContentClip
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7607
+    startLine: 7656
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19143,7 +19223,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DebugRenderingColor
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7625
+    startLine: 7674
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19170,7 +19250,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UseTranslationY
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7627
+    startLine: 7676
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19199,7 +19279,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UseTranslationX
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7632
+    startLine: 7681
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19228,7 +19308,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LinkTransforms
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7653
+    startLine: 7702
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19257,7 +19337,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DrawRenderObject
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7695
+    startLine: 7744
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19292,7 +19372,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RenderViewsList
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7731
+    startLine: 7780
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19335,7 +19415,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CreateHitRect
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7795
+    startLine: 7844
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19366,7 +19446,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _measuredStamp
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7806
+    startLine: 7855
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19393,7 +19473,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _builtRenderTreeStamp
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7807
+    startLine: 7856
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19420,7 +19500,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RenderTree
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7812
+    startLine: 7861
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19451,7 +19531,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetRenderingTree
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7814
+    startLine: 7863
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19483,7 +19563,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Invalidated
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7822
+    startLine: 7871
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19512,7 +19592,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedUpdate
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7827
+    startLine: 7876
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19543,7 +19623,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Superview
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7849
+    startLine: 7898
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19574,7 +19654,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetSuperview
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7880
+    startLine: 7929
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19605,7 +19685,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DelegateGetOnScreenVisibleArea
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7889
+    startLine: 7938
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19632,7 +19712,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetOnScreenVisibleArea
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7899
+    startLine: 7948
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19676,7 +19756,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsParentIndependent
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 7964
+    startLine: 8013
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19707,7 +19787,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WillNotUpdateParent
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8001
+    startLine: 8050
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19738,7 +19818,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UpdateInternal
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8003
+    startLine: 8052
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19764,7 +19844,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UpdatedRendering
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8034
+    startLine: 8083
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19791,7 +19871,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UpdatedInvalidation
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8035
+    startLine: 8084
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19818,7 +19898,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Update
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8040
+    startLine: 8089
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19848,7 +19928,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Updated
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8071
+    startLine: 8120
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19877,7 +19957,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: StreamFromString
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8073
+    startLine: 8122
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19911,7 +19991,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DeviceUnitsToPixels
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8078
+    startLine: 8127
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19945,7 +20025,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PixelsToDeviceUnits
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8083
+    startLine: 8132
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -19979,7 +20059,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PaintSystem
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8094
+    startLine: 8143
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20008,7 +20088,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetupBackgroundPaint
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8122
+    startLine: 8171
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20046,7 +20126,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PaintTintBackground
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8173
+    startLine: 8222
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20081,7 +20161,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CombineClipping
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8214
+    startLine: 8263
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20114,7 +20194,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ActionWithClipping
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8223
+    startLine: 8272
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20147,7 +20227,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CalculateMargins
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8247
+    startLine: 8296
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20175,7 +20255,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetAllMarginsInPixels
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8262
+    startLine: 8311
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20209,7 +20289,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetMarginsInPixels
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8271
+    startLine: 8320
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20243,7 +20323,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InvalidateMeasureInternal
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8297
+    startLine: 8346
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20269,7 +20349,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CalculateSizeRequest
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8338
+    startLine: 8387
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20295,7 +20375,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InvalidateChildrenTree
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8347
+    startLine: 8396
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20327,7 +20407,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InvalidateChildrenTree
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8360
+    startLine: 8409
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20353,7 +20433,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OutputDebug
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8371
+    startLine: 8420
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20384,7 +20464,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InvalidateWithChildren
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8373
+    startLine: 8422
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20410,7 +20490,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InvalidateChildren
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8401
+    startLine: 8450
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20442,7 +20522,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WillInvalidateMeasure
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8414
+    startLine: 8463
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20471,7 +20551,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedInvalidateMeasure
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8422
+    startLine: 8471
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20512,7 +20592,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedDraw
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8437
+    startLine: 8486
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20553,7 +20633,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedRepaint
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8449
+    startLine: 8498
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20591,7 +20671,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InvalidateMeasure
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8458
+    startLine: 8507
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20620,7 +20700,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: NeedInvalidateViewport
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8480
+    startLine: 8529
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20656,7 +20736,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnItemTemplateChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8500
+    startLine: 8549
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20682,7 +20762,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CreateContentFromTemplate
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8504
+    startLine: 8553
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20710,7 +20790,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ItemTemplateChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8527
+    startLine: 8576
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20746,7 +20826,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CommitInvalidations
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8547
+    startLine: 8596
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20783,7 +20863,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SuperViewChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8557
+    startLine: 8606
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20809,7 +20889,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PendingUnattachedAnimators
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8581
+    startLine: 8630
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20836,7 +20916,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetAnimatorsManager
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8597
+    startLine: 8646
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20864,7 +20944,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RegisterAnimator
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8602
+    startLine: 8651
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20898,7 +20978,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RegisterAnimator
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8615
+    startLine: 8664
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20929,7 +21009,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UnregisterAnimator
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8622
+    startLine: 8671
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20961,7 +21041,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UnregisterAllAnimatorsByType
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8633
+    startLine: 8682
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -20995,7 +21075,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PlayRippleAnimation
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8648
+    startLine: 8697
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21043,7 +21123,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: PlayShimmerAnimation
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8662
+    startLine: 8711
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21086,7 +21166,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CreateGradient
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8685
+    startLine: 8734
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21119,7 +21199,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LastGradient
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8773
+    startLine: 8822
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21146,7 +21226,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LastShadow
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8774
+    startLine: 8823
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21173,7 +21253,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetupShadow
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8781
+    startLine: 8830
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21215,7 +21295,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetOrderedSubviews
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8808
+    startLine: 8857
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21249,7 +21329,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetUnorderedSubviews
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8818
+    startLine: 8867
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21283,7 +21363,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Views
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8826
+    startLine: 8875
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21316,7 +21396,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DisposeChildren
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8828
+    startLine: 8877
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21342,7 +21422,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnWillDisposeWithChildren
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8844
+    startLine: 8893
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21373,7 +21453,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ClearChildren
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8866
+    startLine: 8915
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21401,7 +21481,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ClearChildren
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8875
+    startLine: 8924
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21436,7 +21516,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ClearChildrenDoNotDispose
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8901
+    startLine: 8950
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21464,7 +21544,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: InvalidateViewsList
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8916
+    startLine: 8965
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21493,7 +21573,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnChildRemoved
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8927
+    startLine: 8976
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21532,7 +21612,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnChildAdded
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8936
+    startLine: 8985
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21565,7 +21645,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ClearDirtyChildren
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8941
+    startLine: 8990
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21591,7 +21671,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TrackChildAsDirty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8946
+    startLine: 8995
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21620,7 +21700,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnChildAdded
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8951
+    startLine: 9000
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21649,7 +21729,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnChildRemoved
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8962
+    startLine: 9011
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21678,7 +21758,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnChildrenChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8976
+    startLine: 9025
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21706,7 +21786,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnViewAttached
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8988
+    startLine: 9037
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21732,7 +21812,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnViewDetached
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8992
+    startLine: 9041
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21758,7 +21838,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GestureListenerRegistrationTime
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8996
+    startLine: 9045
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21790,7 +21870,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RegisterGestureListener
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 8998
+    startLine: 9047
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21822,7 +21902,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UnregisterGestureListener
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9008
+    startLine: 9057
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21854,7 +21934,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GestureListeners
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9022
+    startLine: 9071
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21885,7 +21965,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnParentChanged
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9024
+    startLine: 9073
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21916,7 +21996,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ClearParent
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9043
+    startLine: 9092
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21947,7 +22027,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: StopAnimations
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9049
+    startLine: 9098
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -21973,7 +22053,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetParent
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9055
+    startLine: 9104
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22005,7 +22085,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RegisterGestureListenersTree
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9122
+    startLine: 9171
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22034,7 +22114,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UnregisterGestureListenersTree
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9138
+    startLine: 9187
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22063,7 +22143,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ItemTemplateProperty
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9156
+    startLine: 9205
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22090,7 +22170,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ItemTemplate
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9164
+    startLine: 9213
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22121,7 +22201,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AddOrRemoveView
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9171
+    startLine: 9220
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22155,7 +22235,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetChildrenAsParameters
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9197
+    startLine: 9246
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22190,7 +22270,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetChildren
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9202
+    startLine: 9251
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22225,7 +22305,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: HasItemTemplate
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9256
+    startLine: 9305
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22254,7 +22334,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GesturesEffect
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9291
+    startLine: 9340
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22283,7 +22363,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RescaleAspect
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9293
+    startLine: 9342
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22323,7 +22403,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetWidthRequestPixelsWIthMargins
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9370
+    startLine: 9419
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22357,7 +22437,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetHeightRequestPixelsWIthMargins
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9387
+    startLine: 9436
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22391,7 +22471,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Random
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9405
+    startLine: 9454
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22418,7 +22498,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LastArrangedInside
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9406
+    startLine: 9455
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22445,7 +22525,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _arrangedViewportHeightLimit
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9407
+    startLine: 9456
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22472,7 +22552,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _arrangedViewportWidthLimit
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9408
+    startLine: 9457
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22499,7 +22579,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _lastMeasuredForScale
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9409
+    startLine: 9458
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22526,7 +22606,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RoundToPixels
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9419
+    startLine: 9468
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22559,7 +22639,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: RoundToPixels
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9433
+    startLine: 9482
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22601,7 +22681,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CompareFloats
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9444
+    startLine: 9493
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22639,7 +22719,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CompareDoubles
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9450
+    startLine: 9499
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22677,7 +22757,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CompareRects
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9456
+    startLine: 9505
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22715,7 +22795,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CompareRectsSize
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9478
+    startLine: 9527
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22753,7 +22833,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CompareSize
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9493
+    startLine: 9542
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22791,7 +22871,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CompareVectors
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9508
+    startLine: 9557
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22829,7 +22909,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AreEqual
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9522
+    startLine: 9571
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22867,7 +22947,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AreEqual
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9533
+    startLine: 9582
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22905,7 +22985,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AreVectorsEqual
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9544
+    startLine: 9593
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22943,7 +23023,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetDirectionType
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9558
+    startLine: 9607
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -22981,7 +23061,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetDirectionType
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9579
+    startLine: 9628
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -23019,7 +23099,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AreClose
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9609
+    startLine: 9658
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -23062,7 +23142,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AreClose
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9624
+    startLine: 9673
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -23105,7 +23185,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsOne
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 9638
+    startLine: 9687
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -30755,6 +30835,93 @@ references:
   - name: (
   - name: )
   - name: )
+- uid: DrawnUi.Draw.SkiaControl.DrawnUi.Draw.FluentExtensions.OnContextMenu``1(System.Func{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  name: OnContextMenu<SkiaControl>(SkiaControl, Func<SkiaControl, ContextMenuEventArgs, bool>)
+  nameWithType: FluentExtensions.OnContextMenu<SkiaControl>(SkiaControl, Func<SkiaControl, ContextMenuEventArgs, bool>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnContextMenu<DrawnUi.Draw.SkiaControl>(DrawnUi.Draw.SkiaControl, System.Func<DrawnUi.Draw.SkiaControl, DrawnUi.Draw.ContextMenuEventArgs, bool>)
+  nameWithType.vb: FluentExtensions.OnContextMenu(Of SkiaControl)(SkiaControl, Func(Of SkiaControl, ContextMenuEventArgs, Boolean))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnContextMenu(Of DrawnUi.Draw.SkiaControl)(DrawnUi.Draw.SkiaControl, System.Func(Of DrawnUi.Draw.SkiaControl, DrawnUi.Draw.ContextMenuEventArgs, Boolean))
+  name.vb: OnContextMenu(Of SkiaControl)(SkiaControl, Func(Of SkiaControl, ContextMenuEventArgs, Boolean))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(DrawnUi.Draw.SkiaControl,System.Func{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(DrawnUi.Draw.SkiaControl,System.Func{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.DrawnUi.Draw.FluentExtensions.OnKeyDown``1(System.Action{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.InputKey})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnKeyDown``1(``0,System.Action{``0,DrawnUi.Draw.InputKey})
   parent: DrawnUi.Draw.FluentExtensions
@@ -38115,6 +38282,80 @@ references:
   - name: (
   - name: )
   - name: )
+- uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  name: OnContextMenu<T>(T, Func<T, ContextMenuEventArgs, bool>)
+  nameWithType: FluentExtensions.OnContextMenu<T>(T, Func<T, ContextMenuEventArgs, bool>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnContextMenu<T>(T, System.Func<T, DrawnUi.Draw.ContextMenuEventArgs, bool>)
+  nameWithType.vb: FluentExtensions.OnContextMenu(Of T)(T, Func(Of T, ContextMenuEventArgs, Boolean))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnContextMenu(Of T)(T, System.Func(Of T, DrawnUi.Draw.ContextMenuEventArgs, Boolean))
+  name.vb: OnContextMenu(Of T)(T, Func(Of T, ContextMenuEventArgs, Boolean))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.OnKeyDown``1(``0,System.Action{``0,DrawnUi.Draw.InputKey})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnKeyDown``1(``0,System.Action{``0,DrawnUi.Draw.InputKey})
   isExternal: true
@@ -44126,6 +44367,25 @@ references:
   name: SkipRenderingOutOfBounds
   nameWithType: SkiaControl.SkipRenderingOutOfBounds
   fullName: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+- uid: DrawnUi.Draw.SkiaControl.ContextMenu
+  commentId: P:DrawnUi.Draw.SkiaControl.ContextMenu
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ContextMenu
+  name: ContextMenu
+  nameWithType: SkiaControl.ContextMenu
+  fullName: DrawnUi.Draw.SkiaControl.ContextMenu
+- uid: AppoMobi.Gestures.TouchActionResult.ContextMenu
+  commentId: F:AppoMobi.Gestures.TouchActionResult.ContextMenu
+  isExternal: true
+  name: ContextMenu
+  nameWithType: TouchActionResult.ContextMenu
+  fullName: AppoMobi.Gestures.TouchActionResult.ContextMenu
+- uid: DrawnUi.Draw.SkiaControl.SendContextMenu*
+  commentId: Overload:DrawnUi.Draw.SkiaControl.SendContextMenu
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SendContextMenu_System_Object_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: SendContextMenu
+  nameWithType: SkiaControl.SendContextMenu
+  fullName: DrawnUi.Draw.SkiaControl.SendContextMenu
 - uid: DrawnUi.Draw.SkiaControl.SendTapped*
   commentId: Overload:DrawnUi.Draw.SkiaControl.SendTapped
   href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SendTapped_System_Object_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_System_Boolean_
@@ -44275,6 +44535,74 @@ references:
   - name: ','
   - name: " "
   - name: TResult
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.OnGestures
+  commentId: F:DrawnUi.Draw.SkiaControl.OnGestures
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_OnGestures
+  name: OnGestures
+  nameWithType: SkiaControl.OnGestures
+  fullName: DrawnUi.Draw.SkiaControl.OnGestures
+- uid: DrawnUi.Draw.SkiaControl.ContextMenu*
+  commentId: Overload:DrawnUi.Draw.SkiaControl.ContextMenu
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ContextMenu
+  name: ContextMenu
+  nameWithType: SkiaControl.ContextMenu
+  fullName: DrawnUi.Draw.SkiaControl.ContextMenu
+- uid: System.Func{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean}
+  commentId: T:System.Func{DrawnUi.Draw.SkiaControl,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean}
+  parent: System
+  definition: System.Func`3
+  href: https://learn.microsoft.com/dotnet/api/system.func-3
+  name: Func<SkiaControl, ContextMenuEventArgs, bool>
+  nameWithType: Func<SkiaControl, ContextMenuEventArgs, bool>
+  fullName: System.Func<DrawnUi.Draw.SkiaControl, DrawnUi.Draw.ContextMenuEventArgs, bool>
+  nameWithType.vb: Func(Of SkiaControl, ContextMenuEventArgs, Boolean)
+  fullName.vb: System.Func(Of DrawnUi.Draw.SkiaControl, DrawnUi.Draw.ContextMenuEventArgs, Boolean)
+  name.vb: Func(Of SkiaControl, ContextMenuEventArgs, Boolean)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: <
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaControl
+    name: SkiaControl
+    href: DrawnUi.Draw.SkiaControl.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
 - uid: System.EventHandler{DrawnUi.Draw.SkiaGesturesInfo}
   commentId: T:System.EventHandler{DrawnUi.Draw.SkiaGesturesInfo}

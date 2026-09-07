@@ -1624,6 +1624,16 @@ namespace DrawnUi.Draw
         }
 
 
+        /// <summary>
+        /// Sets the ContextMenu handler (right click / long press / Menu key on the web heads), same shape as
+        /// DrawnUi.React: return true to suppress the browser's own menu, false to let it show.
+        /// </summary>
+        public static T OnContextMenu<T>(this T view, Func<T, ContextMenuEventArgs, bool> handler) where T : SkiaControl
+        {
+            view.ContextMenu = handler == null ? null : (s, e) => handler(view, e);
+            return view;
+        }
+
         #endregion
 
         #region UI

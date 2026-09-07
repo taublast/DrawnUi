@@ -30,7 +30,7 @@
 
     <ItemGroup>
     
-      <PackageReference Include="AppoMobi.Blazor.Gestures" Version="3.10.6" />
+      <PackageReference Include="AppoMobi.Blazor.Gestures" Version="3.11.1" />
     
       <PackageReference Include="AppoMobi.Specials" Version="10.0.2" />
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />

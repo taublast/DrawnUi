@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AppoMobi.Gestures" Version="3.10.4" />
+    <PackageReference Include="AppoMobi.Gestures" Version="3.11.1" />
     <PackageReference Include="AppoMobi.Specials" Version="10.0.2" />
     <PackageReference Include="CommonMark.NET" Version="0.15.1" />
     <PackageReference Include="EasyCaching.InMemory" Version="1.9.2" />

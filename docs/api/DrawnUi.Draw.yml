@@ -45,6 +45,8 @@ items:
   - DrawnUi.Draw.ContainsPointResult
   - DrawnUi.Draw.ContentLayout
   - DrawnUi.Draw.ContextArguments
+  - DrawnUi.Draw.ContextMenuEventArgs
+  - DrawnUi.Draw.ContextMenuSource
   - DrawnUi.Draw.ContrastEffect
   - DrawnUi.Draw.ControlInStack
   - DrawnUi.Draw.ControlLifecycleState
@@ -1394,10 +1396,24 @@ references:
   fullName: DrawnUi.Draw.SKPaintExtensions
 - uid: DrawnUi.Draw.ControlTappedEventArgs
   commentId: T:DrawnUi.Draw.ControlTappedEventArgs
+  parent: DrawnUi.Draw
   href: DrawnUi.Draw.ControlTappedEventArgs.html
   name: ControlTappedEventArgs
   nameWithType: ControlTappedEventArgs
   fullName: DrawnUi.Draw.ControlTappedEventArgs
+- uid: DrawnUi.Draw.ContextMenuEventArgs
+  commentId: T:DrawnUi.Draw.ContextMenuEventArgs
+  href: DrawnUi.Draw.ContextMenuEventArgs.html
+  name: ContextMenuEventArgs
+  nameWithType: ContextMenuEventArgs
+  fullName: DrawnUi.Draw.ContextMenuEventArgs
+- uid: DrawnUi.Draw.ContextMenuSource
+  commentId: T:DrawnUi.Draw.ContextMenuSource
+  parent: DrawnUi.Draw
+  href: DrawnUi.Draw.ContextMenuSource.html
+  name: ContextMenuSource
+  nameWithType: ContextMenuSource
+  fullName: DrawnUi.Draw.ContextMenuSource
 - uid: DrawnUi.Draw.ObservableAttachedItemsCollection`1
   commentId: T:DrawnUi.Draw.ObservableAttachedItemsCollection`1
   href: DrawnUi.Draw.ObservableAttachedItemsCollection-1.html

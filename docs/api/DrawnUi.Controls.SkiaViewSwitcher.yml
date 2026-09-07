@@ -82,6 +82,7 @@ items:
   - DrawnUi.Controls.SkiaViewSwitcher.UnloadView(DrawnUi.Controls.SkiaViewSwitcher.NavigationStackEntry)
   - DrawnUi.Controls.SkiaViewSwitcher.UpdateVisibleIndex
   - DrawnUi.Controls.SkiaViewSwitcher.Viewport
+  - DrawnUi.Controls.SkiaViewSwitcher.WaitForNextFrameAsync(System.Int32)
   langs:
   - csharp
   - vb
@@ -594,6 +595,7 @@ items:
   - DrawnUi.Draw.SkiaControl.TransformView
   - DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
   - DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+  - DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   - DrawnUi.Draw.SkiaControl.SendLongPressing(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   - DrawnUi.Draw.SkiaControl.ChildTapped
@@ -602,6 +604,7 @@ items:
   - DrawnUi.Draw.SkiaControl.OnGestures
   - DrawnUi.Draw.SkiaControl.Tapped
   - DrawnUi.Draw.SkiaControl.LongPressing
+  - DrawnUi.Draw.SkiaControl.ContextMenu
   - DrawnUi.Draw.SkiaControl.ConsumeGestures
   - DrawnUi.Draw.SkiaControl.OnChildTapped(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
@@ -1231,6 +1234,7 @@ items:
   - DrawnUi.Controls.SkiaViewSwitcher.DrawnUi.Draw.FluentExtensions.Observe``2(System.Func{{TSource}},System.Action{DrawnUi.Controls.SkiaViewSwitcher},System.String[])
   - DrawnUi.Controls.SkiaViewSwitcher.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Controls.SkiaViewSwitcher,System.String},System.String[])
   - DrawnUi.Controls.SkiaViewSwitcher.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Controls.SkiaViewSwitcher},System.String[])
+  - DrawnUi.Controls.SkiaViewSwitcher.DrawnUi.Draw.FluentExtensions.OnContextMenu``1(System.Func{DrawnUi.Controls.SkiaViewSwitcher,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
   - DrawnUi.Controls.SkiaViewSwitcher.DrawnUi.Draw.FluentExtensions.OnKeyDown``1(System.Action{DrawnUi.Controls.SkiaViewSwitcher,DrawnUi.Draw.InputKey})
   - DrawnUi.Controls.SkiaViewSwitcher.DrawnUi.Draw.FluentExtensions.OnKeyUp``1(System.Action{DrawnUi.Controls.SkiaViewSwitcher,DrawnUi.Draw.InputKey})
   - DrawnUi.Controls.SkiaViewSwitcher.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Controls.SkiaViewSwitcher})
@@ -3149,6 +3153,45 @@ items:
       type: System.Threading.Tasks.Task
     content.vb: Public Function ProcessIndexBufferAsync() As Task
   overload: DrawnUi.Controls.SkiaViewSwitcher.ProcessIndexBufferAsync*
+- uid: DrawnUi.Controls.SkiaViewSwitcher.WaitForNextFrameAsync(System.Int32)
+  commentId: M:DrawnUi.Controls.SkiaViewSwitcher.WaitForNextFrameAsync(System.Int32)
+  id: WaitForNextFrameAsync(System.Int32)
+  parent: DrawnUi.Controls.SkiaViewSwitcher
+  langs:
+  - csharp
+  - vb
+  name: WaitForNextFrameAsync(int)
+  nameWithType: SkiaViewSwitcher.WaitForNextFrameAsync(int)
+  fullName: DrawnUi.Controls.SkiaViewSwitcher.WaitForNextFrameAsync(int)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: WaitForNextFrameAsync
+    path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
+    startLine: 822
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: >-
+    Completes after this switcher's next rendered frame (or the timeout), so a timed
+
+    transition begins with the new view already measured and painted once.
+  example: []
+  syntax:
+    content: protected Task WaitForNextFrameAsync(int timeoutMs)
+    parameters:
+    - id: timeoutMs
+      type: System.Int32
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Protected Function WaitForNextFrameAsync(timeoutMs As Integer) As Task
+  overload: DrawnUi.Controls.SkiaViewSwitcher.WaitForNextFrameAsync*
+  nameWithType.vb: SkiaViewSwitcher.WaitForNextFrameAsync(Integer)
+  fullName.vb: DrawnUi.Controls.SkiaViewSwitcher.WaitForNextFrameAsync(Integer)
+  name.vb: WaitForNextFrameAsync(Integer)
 - uid: DrawnUi.Controls.SkiaViewSwitcher.SetupTransitionAnimation(DrawnUi.Infrastructure.Enums.DoubleViewTransitionType,DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl)
   commentId: M:DrawnUi.Controls.SkiaViewSwitcher.SetupTransitionAnimation(DrawnUi.Infrastructure.Enums.DoubleViewTransitionType,DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl)
   id: SetupTransitionAnimation(DrawnUi.Infrastructure.Enums.DoubleViewTransitionType,DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaControl)
@@ -3167,7 +3210,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetupTransitionAnimation
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 818
+    startLine: 838
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3202,7 +3245,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ExecuteTransitionAnimation
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 866
+    startLine: 886
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3240,7 +3283,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FirstViewAppeared
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 985
+    startLine: 1005
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3267,7 +3310,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsApplyingIdex
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 986
+    startLine: 1006
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3294,7 +3337,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplySelectedIndex
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 988
+    startLine: 1008
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3325,7 +3368,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnSelectedIndexApplied
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 1179
+    startLine: 1204
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3351,7 +3394,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnDisposing
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 1193
+    startLine: 1218
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3380,7 +3423,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: BusyChanged
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 1201
+    startLine: 1226
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3407,7 +3450,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: LoadedLazyView
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 1202
+    startLine: 1227
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3434,7 +3477,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SendOnDisappearing
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 1208
+    startLine: 1233
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3463,7 +3506,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UnloadView
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 1216
+    startLine: 1241
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3492,7 +3535,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Viewport
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 1249
+    startLine: 1274
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3524,7 +3567,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UpdateVisibleIndex
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 1251
+    startLine: 1276
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3553,7 +3596,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: TrackIndexPosition
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 1255
+    startLine: 1280
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -3585,7 +3628,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ScrollTo
     path: ../src/Shared/DrawnUi/Controls/Layouts/SkiaViewSwitcher.cs
-    startLine: 1257
+    startLine: 1282
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -14304,6 +14347,57 @@ references:
   name: SkipRenderingOutOfBounds
   nameWithType: SkiaControl.SkipRenderingOutOfBounds
   fullName: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+- uid: DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SendContextMenu_System_Object_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: SendContextMenu(object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: SkiaControl.SendContextMenu(object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaControl.SendContextMenu(object, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  nameWithType.vb: SkiaControl.SendContextMenu(Object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SendContextMenu(Object, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  name.vb: SendContextMenu(Object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: SendContextMenu
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SendContextMenu_System_Object_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: SendContextMenu
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SendContextMenu_System_Object_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   parent: DrawnUi.Draw.SkiaControl
@@ -14511,6 +14605,13 @@ references:
   name: LongPressing
   nameWithType: SkiaControl.LongPressing
   fullName: DrawnUi.Draw.SkiaControl.LongPressing
+- uid: DrawnUi.Draw.SkiaControl.ContextMenu
+  commentId: P:DrawnUi.Draw.SkiaControl.ContextMenu
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ContextMenu
+  name: ContextMenu
+  nameWithType: SkiaControl.ContextMenu
+  fullName: DrawnUi.Draw.SkiaControl.ContextMenu
 - uid: DrawnUi.Draw.SkiaControl.ConsumeGestures
   commentId: E:DrawnUi.Draw.SkiaControl.ConsumeGestures
   parent: DrawnUi.Draw.SkiaControl
@@ -30356,6 +30457,93 @@ references:
   - name: (
   - name: )
   - name: )
+- uid: DrawnUi.Controls.SkiaViewSwitcher.DrawnUi.Draw.FluentExtensions.OnContextMenu``1(System.Func{DrawnUi.Controls.SkiaViewSwitcher,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  name: OnContextMenu<SkiaViewSwitcher>(SkiaViewSwitcher, Func<SkiaViewSwitcher, ContextMenuEventArgs, bool>)
+  nameWithType: FluentExtensions.OnContextMenu<SkiaViewSwitcher>(SkiaViewSwitcher, Func<SkiaViewSwitcher, ContextMenuEventArgs, bool>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnContextMenu<DrawnUi.Controls.SkiaViewSwitcher>(DrawnUi.Controls.SkiaViewSwitcher, System.Func<DrawnUi.Controls.SkiaViewSwitcher, DrawnUi.Draw.ContextMenuEventArgs, bool>)
+  nameWithType.vb: FluentExtensions.OnContextMenu(Of SkiaViewSwitcher)(SkiaViewSwitcher, Func(Of SkiaViewSwitcher, ContextMenuEventArgs, Boolean))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnContextMenu(Of DrawnUi.Controls.SkiaViewSwitcher)(DrawnUi.Controls.SkiaViewSwitcher, System.Func(Of DrawnUi.Controls.SkiaViewSwitcher, DrawnUi.Draw.ContextMenuEventArgs, Boolean))
+  name.vb: OnContextMenu(Of SkiaViewSwitcher)(SkiaViewSwitcher, Func(Of SkiaViewSwitcher, ContextMenuEventArgs, Boolean))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(DrawnUi.Controls.SkiaViewSwitcher,System.Func{DrawnUi.Controls.SkiaViewSwitcher,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: <
+  - uid: DrawnUi.Controls.SkiaViewSwitcher
+    name: SkiaViewSwitcher
+    href: DrawnUi.Controls.SkiaViewSwitcher.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Controls.SkiaViewSwitcher
+    name: SkiaViewSwitcher
+    href: DrawnUi.Controls.SkiaViewSwitcher.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: <
+  - uid: DrawnUi.Controls.SkiaViewSwitcher
+    name: SkiaViewSwitcher
+    href: DrawnUi.Controls.SkiaViewSwitcher.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(DrawnUi.Controls.SkiaViewSwitcher,System.Func{DrawnUi.Controls.SkiaViewSwitcher,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaViewSwitcher
+    name: SkiaViewSwitcher
+    href: DrawnUi.Controls.SkiaViewSwitcher.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Controls.SkiaViewSwitcher
+    name: SkiaViewSwitcher
+    href: DrawnUi.Controls.SkiaViewSwitcher.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaViewSwitcher
+    name: SkiaViewSwitcher
+    href: DrawnUi.Controls.SkiaViewSwitcher.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  - name: )
 - uid: DrawnUi.Controls.SkiaViewSwitcher.DrawnUi.Draw.FluentExtensions.OnKeyDown``1(System.Action{DrawnUi.Controls.SkiaViewSwitcher,DrawnUi.Draw.InputKey})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnKeyDown``1(``0,System.Action{``0,DrawnUi.Draw.InputKey})
   parent: DrawnUi.Draw.FluentExtensions
@@ -38414,6 +38602,80 @@ references:
   - name: (
   - name: )
   - name: )
+- uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  name: OnContextMenu<T>(T, Func<T, ContextMenuEventArgs, bool>)
+  nameWithType: FluentExtensions.OnContextMenu<T>(T, Func<T, ContextMenuEventArgs, bool>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnContextMenu<T>(T, System.Func<T, DrawnUi.Draw.ContextMenuEventArgs, bool>)
+  nameWithType.vb: FluentExtensions.OnContextMenu(Of T)(T, Func(Of T, ContextMenuEventArgs, Boolean))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnContextMenu(Of T)(T, System.Func(Of T, DrawnUi.Draw.ContextMenuEventArgs, Boolean))
+  name.vb: OnContextMenu(Of T)(T, Func(Of T, ContextMenuEventArgs, Boolean))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.OnKeyDown``1(``0,System.Action{``0,DrawnUi.Draw.InputKey})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnKeyDown``1(``0,System.Action{``0,DrawnUi.Draw.InputKey})
   isExternal: true
@@ -43161,6 +43423,12 @@ references:
   name: ProcessIndexBufferAsync
   nameWithType: SkiaViewSwitcher.ProcessIndexBufferAsync
   fullName: DrawnUi.Controls.SkiaViewSwitcher.ProcessIndexBufferAsync
+- uid: DrawnUi.Controls.SkiaViewSwitcher.WaitForNextFrameAsync*
+  commentId: Overload:DrawnUi.Controls.SkiaViewSwitcher.WaitForNextFrameAsync
+  href: DrawnUi.Controls.SkiaViewSwitcher.html#DrawnUi_Controls_SkiaViewSwitcher_WaitForNextFrameAsync_System_Int32_
+  name: WaitForNextFrameAsync
+  nameWithType: SkiaViewSwitcher.WaitForNextFrameAsync
+  fullName: DrawnUi.Controls.SkiaViewSwitcher.WaitForNextFrameAsync
 - uid: DrawnUi.Controls.SkiaViewSwitcher.SetupTransitionAnimation*
   commentId: Overload:DrawnUi.Controls.SkiaViewSwitcher.SetupTransitionAnimation
   href: DrawnUi.Controls.SkiaViewSwitcher.html#DrawnUi_Controls_SkiaViewSwitcher_SetupTransitionAnimation_DrawnUi_Infrastructure_Enums_DoubleViewTransitionType_DrawnUi_Draw_SkiaControl_DrawnUi_Draw_SkiaControl_

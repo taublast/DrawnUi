@@ -129,6 +129,32 @@ public static partial class WebInput
     }
 
     /// <summary>
+    /// Called by JS on the browser contextmenu event (right click, long press on touch, keyboard Menu key).
+    /// Returns true when a control took it (the JS side then calls preventDefault); false = browser menu shows.
+    /// </summary>
+    [JSExport]
+    public static bool OnContextMenu(double x, double y, string pointerType)
+    {
+        var scale = Math.Max(0.1f, RenderingScale);
+        var location = new PointF((float)x * scale, (float)y * scale);
+        var args = MakeTouchArgs(0, TouchActionType.ContextMenu, location);
+        args.IsInsideView = true;
+        args.StartingLocation = location;
+        args.Distance = new TouchActionEventArgs.DistanceInfo();
+        args.Pointer = new PointerData
+        {
+            Button = MouseButton.Right,
+            ButtonNumber = 2,
+            State = MouseButtonState.Released,
+            DeviceType = pointerType switch { "touch" => PointerDeviceType.Touch, "pen" => PointerDeviceType.Pen, _ => PointerDeviceType.Mouse },
+        };
+
+        TargetCanvas?.OnGestureEvent(TouchActionType.ContextMenu, args, TouchActionResult.ContextMenu);
+
+        return args.Handled;
+    }
+
+    /// <summary>
     /// Called by JS when pointer is cancelled
     /// </summary>
     [JSExport]

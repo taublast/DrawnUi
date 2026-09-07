@@ -25,6 +25,21 @@ namespace DrawnUi.Draw
         [Parameter]
         public DrawnView? Superview { get; set; }
 
+        /// <summary>
+        /// Canvas element size in CSS units. Declared so it is consumed as a parameter and never
+        /// splatted into the html canvas element via SKGLView.AdditionalAttributes:
+        /// a float lands there as a culture-formatted string ("755,2"), which is an invalid
+        /// width/height attribute, so the browser resets the drawing buffer to 300x150 = blank frame.
+        /// </summary>
+        [Parameter]
+        public float Width { get; set; }
+
+        /// <summary>
+        /// Canvas element size in CSS units, see <see cref="Width"/>.
+        /// </summary>
+        [Parameter]
+        public float Height { get; set; }
+
         protected override void OnParametersSet()
         {
             base.OnParametersSet();

@@ -1953,6 +1953,38 @@ namespace DrawnUi.Draw
         /// <param name="apply"></param>
         /// <param name="useMainThread"></param>
         /// <returns></returns>
+        /// <summary>
+        /// Calls <see cref="ContextMenu"/> for a <see cref="TouchActionResult.ContextMenu"/> gesture that no child
+        /// consumed. Returns true when the handler took it (returned true); the platform args are then marked
+        /// Handled so the host suppresses the browser menu.
+        /// </summary>
+        protected bool SendContextMenu(object listener, SkiaGesturesParameters args, GestureEventProcessingInfo apply)
+        {
+            if (ContextMenu == null)
+                return false;
+
+            var pointer = args.Event?.Pointer;
+            var source = pointer == null ? ContextMenuSource.Keyboard
+                : pointer.DeviceType == PointerDeviceType.Mouse ? ContextMenuSource.Mouse
+                : ContextMenuSource.Touch;
+
+            var e = new ContextMenuEventArgs(listener, args, apply)
+            {
+                Source = source,
+                Local = GetOffsetInsideControlInPoints(
+                    new PointF(apply.MappedLocation.X, apply.MappedLocation.Y), apply.ChildOffset)
+            };
+
+            var handled = ContextMenu.Invoke(this, e);
+
+            if (handled && args.Event != null)
+            {
+                args.Event.Handled = true;
+            }
+
+            return handled;
+        }
+
         protected bool SendTapped(object listener, SkiaGesturesParameters args, GestureEventProcessingInfo apply,
             bool useMainThread)
         {
@@ -2079,6 +2111,15 @@ namespace DrawnUi.Draw
         public event EventHandler<ControlTappedEventArgs> Tapped;
 
         public event EventHandler<ControlTappedEventArgs> LongPressing;
+
+        /// <summary>
+        /// Context-menu request over this control: a right click, a long press on touch, or the keyboard Menu key.
+        /// A delegate rather than an event (like <see cref="OnGestures"/>) so it can answer, same shape as
+        /// DrawnUi.React: return true to take the request, the browser's own canvas menu is then suppressed;
+        /// return false or leave it null and the browser menu shows. Routed like a tap: deepest hit child first,
+        /// then parents. Called by the web heads (Blazor, Wasm) only.
+        /// </summary>
+        public Func<SkiaControl, ContextMenuEventArgs, bool> ContextMenu { get; set; }
 
         /// <summary>
         /// Gestures event handler for fast access. To mark a gesture as consumed set `e.Consumed` to `true` inside a synchronous (!) event handler.
@@ -2677,6 +2718,14 @@ namespace DrawnUi.Draw
                 if (SendTapped(meAsListener, args, apply, Super.SendTapsOnMainThread))
                 {
                     return meAsListener;
+                }
+            }
+
+            if (args.Type == TouchActionResult.ContextMenu && this is ISkiaGestureListener meAsContextMenuListener && consumed == null)
+            {
+                if (SendContextMenu(meAsContextMenuListener, args, apply))
+                {
+                    return meAsContextMenuListener;
                 }
             }
 

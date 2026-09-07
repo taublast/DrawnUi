@@ -292,6 +292,8 @@ function setupInputHandlers() {
     canvas.addEventListener('pointerup', e => onPointerUp?.(e.pointerId, relX(e), relY(e), e.button, e.buttons));
     canvas.addEventListener('pointercancel', e => onPointerCancel?.(e.pointerId));
     canvas.addEventListener('wheel', e => { e.preventDefault(); moduleOnWheel?.(e.deltaX, e.deltaY, e.deltaMode, relX(e), relY(e)); }, { passive: false });
+    // right click / long press / Menu key: a control that handles ContextMenu suppresses the browser menu
+    canvas.addEventListener('contextmenu', e => { if (onContextMenu?.(relX(e), relY(e), e.pointerType ?? 'mouse')) e.preventDefault(); });
     window.addEventListener('resize', reportCanvasSize);
 }
 
@@ -403,6 +405,7 @@ export function setModuleExports(exports) {
     onPointerUp = exports.onPointerUp;
     onPointerCancel = exports.onPointerCancel;
     moduleOnWheel = exports.onWheel;
+    onContextMenu = exports.onContextMenu;
     onCanvasResize = exports.onCanvasResize;
     onKeyDown = exports.onKeyDown;
     onKeyUp = exports.onKeyUp;
@@ -437,6 +440,7 @@ let onPointerMove = null;
 let onPointerUp = null;
 let onPointerCancel = null;
 let moduleOnWheel = null;
+let onContextMenu = null;
 let onCanvasResize = null;
 let onKeyDown = null;
 let onKeyUp = null;

@@ -44,7 +44,7 @@ Caching follows the .NET model: `UseCache` takes the same values. `Operations` r
 Work continues control by control against the .NET sources. On the list today:
 
 - A dedicated GPU cache path. `GPU` currently resolves to `Image` and `ImageCompositeGPU` to `ImageComposite`.
-- Long press, hover and multi-touch pinch. They are declared for parity and not produced yet.
+- Long press, hover and multi-touch pinch. They are declared for parity and not produced yet. Right click: every mouse button taps, with the button in `e.Parameters.Event.Pointer`, and `ContextMenu` on any control (and on `<Canvas>`) takes the browser menu request, the same handler shape as on the .NET web heads.
 - Styles and `ConfigureStyles`.
 - Background cache recording. Everything runs on the browser main thread, so recording is synchronous, as in DrawnUi.Blazor.
 

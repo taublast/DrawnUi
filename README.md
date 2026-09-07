@@ -17,7 +17,11 @@ Supported hosts:
 * `DrawnUi.Wasm` - pure browser WebAssembly, no Blazor required.
 * `DrawnUi.OpenTk` - Windows and Linux desktops.
 * `DrawnUi.Net` - platform-agnostic console/server rendering scenarios.
-* More to come..
+
+## React?
+
+DrawnUI for React just appeared as a standalone DrawnUI engine in TypeScript, running on [CanvasKit](https://skia.org/docs/user/modules/canvaskit/) (Skia compiled to WebAssembly) in the browser. It tends to use same API as the .NET version. 
+Under active development, more info [on our site](https://drawnui.net/articles/react).
 
 ## Features 
 
@@ -52,15 +56,17 @@ Supported hosts:
 🤩 [Fiddle](https://fiddle.drawnui.net)   
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
+## What's New 1.10.6.8
 
-## What's New 1.10.6.7
-
-  * SkiaLabel: built-in drop shadow size now cached properly
-  * SkiaShell blur backdrop and modal animation fixed
+  * Blazor: auto-sized `Canvas` (no `HeightRequest`) measured its content with unit constraints where pixels were expected, so labels wrapped an extra line and the host was reported too tall; the first change that dirtied the content re-measured, the canvas element resized and its drawing buffer blanked for a frame (the "blink on first tap"). Canvas size floats are no longer splatted onto the html canvas as culture-formatted `width`/`height` attributes, and a canvas resize now requests a repaint under `UpdateModeType.Dynamic`.
+  * Blazor: can handle browser context menu instead of supression:  [Mouse buttons and the browser context menu](docs/articles/gestures.md#mouse-buttons-and-the-browser-context-menu).
+  * Use latest `AppoMobi.Gestures` nuget version for Blazor improvements
   * Updated docs (https://drawnui.net)
 
  ### Previously
 
+  * SkiaLabel: built-in drop shadow size now cached properly
+  * SkiaShell blur backdrop and modal animation fixed
   * HotFix for autosized templated layout not growing/shrinking when NOT inside a scroll
   * `SkiaEditor` implemented `IsSpellCheckEnabled` property
   * Fix `SkiaSvg` source to accept Unicode strings.
@@ -72,7 +78,7 @@ Supported hosts:
   * Fill layouts measured on an unbounded axis report their content size instead of infinity; `MaximumWidthRequest`/`MaximumHeightRequest` are honored at arrange as well as measure.
   * Styled controls (`SkiaSlider`, `SkiaProgress`, `SkiaSwitch`, `SkiaCheckbox`, `SkiaRadioButton`, `SkiaButton`, `RefreshIndicator`) no longer override user-set properties when their look is built lazily: `HorizontalOptions`, `UseCache`, colors, `SliderHeight`, `OnGestures`... set by you always win (`SetStyleDefault` for control authors).
   * Windows: accelerated `Canvas` under an animated XAML scale transform (popup zoom-in, `ScaleTo`) rendered a 2x zoomed crop for the animated frames. DrawnUi now owns the swap-chain panel (`DrawnSwapChainPanel`, forked from SkiaSharp's `AngleSwapChainPanel`): the GL surface is sized by the real DPI and only recreated on a real DPI change, never on transient composition-scale changes.
- * Fixed Windows builds failing with `MSB3030: Could not copy ... DrawnUi.Maui\Platforms\Windows\Natives\libEGL.dll` on 1.10.5.15: Windows ANGLE natives are now delivered as build items instead of a raw `Copy` into the output directory, so they reach the MSIX payload as well as unpackaged output, for both a project reference and a nuget reference.
+  * Fixed Windows builds failing with `MSB3030: Could not copy ... DrawnUi.Maui\Platforms\Windows\Natives\libEGL.dll` on 1.10.5.15: Windows ANGLE natives are now delivered as build items instead of a raw `Copy` into the output directory, so they reach the MSIX payload as well as unpackaged output, for both a project reference and a nuget reference.
  
 * 
 ---

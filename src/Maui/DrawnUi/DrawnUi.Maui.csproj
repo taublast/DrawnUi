@@ -75,7 +75,7 @@
         <!--parsing markdown text-->
         <!--cannot use due to .net runtime bug still being worked out to be fixed-->
         <!--<PackageReference Include="Markdig" Version="0.41.1" />-->
-        <PackageReference Include="AppoMobi.Maui.Gestures" Version="3.10.4" />
+        <PackageReference Include="AppoMobi.Maui.Gestures" Version="3.11.1" />
         <PackageReference Include="CommonMark.NET" Version="0.15.1" />
         <PackageReference Include="Plugin.Maui.ApplePlatform" Version="1.0.0">
           <PrivateAssets>all</PrivateAssets>

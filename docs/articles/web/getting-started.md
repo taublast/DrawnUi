@@ -83,7 +83,8 @@ setModuleExports({
     onPointerMove: Input.OnPointerMove,
     onPointerUp:   Input.OnPointerUp,
     onPointerCancel: Input.OnPointerCancel,
-    onWheel:   Input.OnWheel,
+    onWheel: Input.OnWheel,
+    onContextMenu: Input.OnContextMenu,
     onKeyDown: Input.OnKeyDown,
     onKeyUp:   Input.OnKeyUp,
 });

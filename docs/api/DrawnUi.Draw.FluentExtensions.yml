@@ -59,6 +59,7 @@ items:
   - DrawnUi.Draw.FluentExtensions.Observe``2(``0,System.Func{``1},System.Action{``0},System.String[])
   - DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0,System.String},System.String[])
   - DrawnUi.Draw.FluentExtensions.Observe``2(``0,``1,System.Action{``0},System.String[])
+  - DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
   - DrawnUi.Draw.FluentExtensions.OnFocusChanged``1(``0,System.Action{``0,System.Boolean})
   - DrawnUi.Draw.FluentExtensions.OnKeyDown``1(``0,System.Action{``0,DrawnUi.Draw.InputKey})
   - DrawnUi.Draw.FluentExtensions.OnKeyUp``1(``0,System.Action{``0,DrawnUi.Draw.InputKey})
@@ -3854,6 +3855,50 @@ items:
   nameWithType.vb: FluentExtensions.OnTapped(Of T)(T, Action(Of T, ControlTappedEventArgs))
   fullName.vb: DrawnUi.Draw.FluentExtensions.OnTapped(Of T)(T, System.Action(Of T, DrawnUi.Draw.ControlTappedEventArgs))
   name.vb: OnTapped(Of T)(T, Action(Of T, ControlTappedEventArgs))
+- uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  id: OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  isExtensionMethod: true
+  parent: DrawnUi.Draw.FluentExtensions
+  langs:
+  - csharp
+  - vb
+  name: OnContextMenu<T>(T, Func<T, ContextMenuEventArgs, bool>)
+  nameWithType: FluentExtensions.OnContextMenu<T>(T, Func<T, ContextMenuEventArgs, bool>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnContextMenu<T>(T, System.Func<T, DrawnUi.Draw.ContextMenuEventArgs, bool>)
+  type: Method
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: OnContextMenu
+    path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
+    startLine: 1630
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Draw
+  summary: >-
+    Sets the ContextMenu handler (right click / long press / Menu key on the web heads), same shape as
+
+    DrawnUi.React: return true to suppress the browser's own menu, false to let it show.
+  example: []
+  syntax:
+    content: 'public static T OnContextMenu<T>(this T view, Func<T, ContextMenuEventArgs, bool> handler) where T : SkiaControl'
+    parameters:
+    - id: view
+      type: '{T}'
+    - id: handler
+      type: System.Func{{T},DrawnUi.Draw.ContextMenuEventArgs,System.Boolean}
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Public Shared Function OnContextMenu(Of T As SkiaControl)(view As T, handler As Func(Of T, ContextMenuEventArgs, Boolean)) As T
+  overload: DrawnUi.Draw.FluentExtensions.OnContextMenu*
+  nameWithType.vb: FluentExtensions.OnContextMenu(Of T)(T, Func(Of T, ContextMenuEventArgs, Boolean))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnContextMenu(Of T)(T, System.Func(Of T, DrawnUi.Draw.ContextMenuEventArgs, Boolean))
+  name.vb: OnContextMenu(Of T)(T, Func(Of T, ContextMenuEventArgs, Boolean))
 - uid: DrawnUi.Draw.FluentExtensions.WithChildren``1(``0,DrawnUi.Draw.SkiaControl[])
   commentId: M:DrawnUi.Draw.FluentExtensions.WithChildren``1(``0,DrawnUi.Draw.SkiaControl[])
   id: WithChildren``1(``0,DrawnUi.Draw.SkiaControl[])
@@ -3873,7 +3918,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithChildren
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1637
+    startLine: 1647
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3918,7 +3963,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithContent
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1654
+    startLine: 1664
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -3963,7 +4008,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithParent
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1667
+    startLine: 1677
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4008,7 +4053,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CenterX
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1681
+    startLine: 1691
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4050,7 +4095,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CenterY
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1693
+    startLine: 1703
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4092,7 +4137,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Fill
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1705
+    startLine: 1715
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4134,7 +4179,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FillX
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1718
+    startLine: 1728
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4176,7 +4221,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: EndX
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1724
+    startLine: 1734
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4213,7 +4258,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: EndY
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1730
+    startLine: 1740
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4250,7 +4295,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: StartX
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1736
+    startLine: 1746
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4287,7 +4332,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: StartY
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1742
+    startLine: 1752
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4324,7 +4369,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: FillY
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1755
+    startLine: 1765
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4366,7 +4411,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Center
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1767
+    startLine: 1777
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4408,7 +4453,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CenterTextX
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1778
+    startLine: 1788
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4450,7 +4495,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CenterTextY
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1788
+    startLine: 1798
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4492,7 +4537,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CenterText
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1797
+    startLine: 1807
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4531,7 +4576,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithMargin
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1813
+    startLine: 1823
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4576,7 +4621,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithMargin
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1827
+    startLine: 1837
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4624,7 +4669,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithMargin
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1843
+    startLine: 1853
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4678,7 +4723,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithPadding
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1857
+    startLine: 1867
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4723,7 +4768,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithPadding
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1871
+    startLine: 1881
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4771,7 +4816,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithPadding
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1887
+    startLine: 1897
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4825,7 +4870,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithTag
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1901
+    startLine: 1911
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4870,7 +4915,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithCache
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1918
+    startLine: 1928
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4915,7 +4960,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithBackgroundColor
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1931
+    startLine: 1941
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -4960,7 +5005,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithHorizontalOptions
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1944
+    startLine: 1954
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5005,7 +5050,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithVerticalOptions
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1957
+    startLine: 1967
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5050,7 +5095,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithHeight
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1970
+    startLine: 1980
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5095,7 +5140,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithWidth
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1983
+    startLine: 1993
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5140,7 +5185,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithMargin
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 1996
+    startLine: 2006
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5185,7 +5230,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithVisibility
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2002
+    startLine: 2012
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5224,7 +5269,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithShapeType
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2019
+    startLine: 2029
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5269,7 +5314,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Shape
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2032
+    startLine: 2042
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5314,7 +5359,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithAspect
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2049
+    startLine: 2059
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5359,7 +5404,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithFontSize
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2066
+    startLine: 2076
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5404,7 +5449,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithTextColor
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2079
+    startLine: 2089
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5449,7 +5494,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithHorizontalTextAlignment
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2092
+    startLine: 2102
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5494,7 +5539,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: OnTextChanged
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2107
+    startLine: 2117
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5536,7 +5581,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithText
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2124
+    startLine: 2134
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5577,7 +5622,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithItemsSource
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2133
+    startLine: 2143
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5618,7 +5663,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithEnabled
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2145
+    startLine: 2155
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5659,7 +5704,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithOpacity
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2154
+    startLine: 2164
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5700,7 +5745,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithRotation
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2163
+    startLine: 2173
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5741,7 +5786,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithScale
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2172
+    startLine: 2182
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5782,7 +5827,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithScale
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2181
+    startLine: 2191
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5825,7 +5870,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithType
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2191
+    startLine: 2201
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5866,7 +5911,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithSpacing
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2200
+    startLine: 2210
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5907,7 +5952,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithColumnSpacing
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2209
+    startLine: 2219
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -5948,7 +5993,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: WithRowSpacing
     path: ../src/Shared/DrawnUi/Internals/Extensions/FluentExtensions.Shared.cs
-    startLine: 2218
+    startLine: 2228
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -9425,6 +9470,63 @@ references:
   - uid: DrawnUi.Draw.ControlTappedEventArgs
     name: ControlTappedEventArgs
     href: DrawnUi.Draw.ControlTappedEventArgs.html
+  - name: )
+- uid: DrawnUi.Draw.FluentExtensions.OnContextMenu*
+  commentId: Overload:DrawnUi.Draw.FluentExtensions.OnContextMenu
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  name: OnContextMenu
+  nameWithType: FluentExtensions.OnContextMenu
+  fullName: DrawnUi.Draw.FluentExtensions.OnContextMenu
+- uid: System.Func{{T},DrawnUi.Draw.ContextMenuEventArgs,System.Boolean}
+  commentId: T:System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean}
+  parent: System
+  definition: System.Func`3
+  href: https://learn.microsoft.com/dotnet/api/system.func-3
+  name: Func<T, ContextMenuEventArgs, bool>
+  nameWithType: Func<T, ContextMenuEventArgs, bool>
+  fullName: System.Func<T, DrawnUi.Draw.ContextMenuEventArgs, bool>
+  nameWithType.vb: Func(Of T, ContextMenuEventArgs, Boolean)
+  fullName.vb: System.Func(Of T, DrawnUi.Draw.ContextMenuEventArgs, Boolean)
+  name.vb: Func(Of T, ContextMenuEventArgs, Boolean)
+  spec.csharp:
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
   - name: )
 - uid: DrawnUi.Draw.FluentExtensions.WithChildren*
   commentId: Overload:DrawnUi.Draw.FluentExtensions.WithChildren

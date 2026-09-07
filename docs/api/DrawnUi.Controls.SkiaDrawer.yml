@@ -13,6 +13,7 @@ items:
   - DrawnUi.Controls.SkiaDrawer.ApplyOptions(System.Boolean)
   - DrawnUi.Controls.SkiaDrawer.ApplyPosition(System.Numerics.Vector2)
   - DrawnUi.Controls.SkiaDrawer.AutoClose
+  - DrawnUi.Controls.SkiaDrawer.AutoVelocity
   - DrawnUi.Controls.SkiaDrawer.CheckNeedToSnap
   - DrawnUi.Controls.SkiaDrawer.ChildWasTapped
   - DrawnUi.Controls.SkiaDrawer.ClampOffsetWithRubberBand(System.Single,System.Single)
@@ -612,6 +613,7 @@ items:
   - DrawnUi.Draw.SkiaControl.TransformView
   - DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBoundsProperty
   - DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+  - DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   - DrawnUi.Draw.SkiaControl.SendLongPressing(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   - DrawnUi.Draw.SkiaControl.ChildTapped
@@ -620,6 +622,7 @@ items:
   - DrawnUi.Draw.SkiaControl.OnGestures
   - DrawnUi.Draw.SkiaControl.Tapped
   - DrawnUi.Draw.SkiaControl.LongPressing
+  - DrawnUi.Draw.SkiaControl.ContextMenu
   - DrawnUi.Draw.SkiaControl.ConsumeGestures
   - DrawnUi.Draw.SkiaControl.OnChildTapped(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
   - DrawnUi.Draw.SkiaControl.GetGesturePositionInsideChild(DrawnUi.Draw.SkiaControl,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
@@ -1247,6 +1250,7 @@ items:
   - DrawnUi.Controls.SkiaDrawer.DrawnUi.Draw.FluentExtensions.Observe``2(System.Func{{TSource}},System.Action{DrawnUi.Controls.SkiaDrawer},System.String[])
   - DrawnUi.Controls.SkiaDrawer.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Controls.SkiaDrawer,System.String},System.String[])
   - DrawnUi.Controls.SkiaDrawer.DrawnUi.Draw.FluentExtensions.Observe``2({TSource},System.Action{DrawnUi.Controls.SkiaDrawer},System.String[])
+  - DrawnUi.Controls.SkiaDrawer.DrawnUi.Draw.FluentExtensions.OnContextMenu``1(System.Func{DrawnUi.Controls.SkiaDrawer,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
   - DrawnUi.Controls.SkiaDrawer.DrawnUi.Draw.FluentExtensions.OnKeyDown``1(System.Action{DrawnUi.Controls.SkiaDrawer,DrawnUi.Draw.InputKey})
   - DrawnUi.Controls.SkiaDrawer.DrawnUi.Draw.FluentExtensions.OnKeyUp``1(System.Action{DrawnUi.Controls.SkiaDrawer,DrawnUi.Draw.InputKey})
   - DrawnUi.Controls.SkiaDrawer.DrawnUi.Draw.FluentExtensions.OnLongPressing``1(System.Action{DrawnUi.Controls.SkiaDrawer})
@@ -2246,6 +2250,42 @@ items:
       description: ''
     content.vb: Protected Overridable Function GetOffsetToHide() As Vector2
   overload: DrawnUi.Controls.SkiaDrawer.GetOffsetToHide*
+- uid: DrawnUi.Controls.SkiaDrawer.AutoVelocity
+  commentId: P:DrawnUi.Controls.SkiaDrawer.AutoVelocity
+  id: AutoVelocity
+  parent: DrawnUi.Controls.SkiaDrawer
+  langs:
+  - csharp
+  - vb
+  name: AutoVelocity
+  nameWithType: SkiaDrawer.AutoVelocity
+  fullName: DrawnUi.Controls.SkiaDrawer.AutoVelocity
+  type: Property
+  source:
+    remote:
+      path: src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: AutoVelocity
+    path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
+    startLine: 402
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: >-
+    Velocity (points per second) used to animate to a snap point when the gesture left
+
+    none, e.g. a programmatic IsOpen change. Sets the open/close duration through
+
+    SnappingLayout's speed formula: 1500 (default) ≈ 0.14 s, 840 ≈ 0.25 s, 375 ≈ 0.56 s.
+  example: []
+  syntax:
+    content: public double AutoVelocity { get; set; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public Property AutoVelocity As Double
+  overload: DrawnUi.Controls.SkiaDrawer.AutoVelocity*
 - uid: DrawnUi.Controls.SkiaDrawer.GetAutoVelocity(System.Numerics.Vector2)
   commentId: M:DrawnUi.Controls.SkiaDrawer.GetAutoVelocity(System.Numerics.Vector2)
   id: GetAutoVelocity(System.Numerics.Vector2)
@@ -2264,7 +2304,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetAutoVelocity
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 397
+    startLine: 404
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2300,7 +2340,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetContentOffsetBounds
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 415
+    startLine: 422
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2331,7 +2371,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplyPosition
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 455
+    startLine: 462
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2362,7 +2402,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ApplyOptions
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 463
+    startLine: 470
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2396,7 +2436,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Paint
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 509
+    startLine: 516
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2434,7 +2474,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: CheckNeedToSnap
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 530
+    startLine: 537
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2462,7 +2502,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: SetIsOpen
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 538
+    startLine: 545
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2488,7 +2528,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: UpdateReportedPosition
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 551
+    startLine: 558
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2516,7 +2556,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: GetClosestSidePoint
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 567
+    startLine: 574
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2557,7 +2597,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsUserFocused
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 613
+    startLine: 620
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2586,7 +2626,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsUserPanning
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 614
+    startLine: 621
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2615,7 +2655,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: _panningOffset
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 615
+    startLine: 622
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2642,7 +2682,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: VelocityAccumulator
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 617
+    startLine: 624
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2671,7 +2711,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ChildWasTapped
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 619
+    startLine: 626
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2698,7 +2738,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ProcessGestures
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 623
+    startLine: 630
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2733,7 +2773,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AutoClose
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 959
+    startLine: 966
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -2762,7 +2802,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: ClampOffsetWithRubberBand
     path: ../src/Shared/DrawnUi/Controls/Drawer/SkiaDrawer.cs
-    startLine: 967
+    startLine: 974
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -14118,6 +14158,57 @@ references:
   name: SkipRenderingOutOfBounds
   nameWithType: SkiaControl.SkipRenderingOutOfBounds
   fullName: DrawnUi.Draw.SkiaControl.SkipRenderingOutOfBounds
+- uid: DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  commentId: M:DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SendContextMenu_System_Object_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  name: SendContextMenu(object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  nameWithType: SkiaControl.SendContextMenu(object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName: DrawnUi.Draw.SkiaControl.SendContextMenu(object, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  nameWithType.vb: SkiaControl.SendContextMenu(Object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  fullName.vb: DrawnUi.Draw.SkiaControl.SendContextMenu(Object, DrawnUi.Draw.SkiaGesturesParameters, DrawnUi.Draw.GestureEventProcessingInfo)
+  name.vb: SendContextMenu(Object, SkiaGesturesParameters, GestureEventProcessingInfo)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: SendContextMenu
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SendContextMenu_System_Object_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.SendContextMenu(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo)
+    name: SendContextMenu
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_SendContextMenu_System_Object_DrawnUi_Draw_SkiaGesturesParameters_DrawnUi_Draw_GestureEventProcessingInfo_
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.SkiaGesturesParameters
+    name: SkiaGesturesParameters
+    href: DrawnUi.Draw.SkiaGesturesParameters.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.GestureEventProcessingInfo
+    name: GestureEventProcessingInfo
+    href: DrawnUi.Draw.GestureEventProcessingInfo.html
+  - name: )
 - uid: DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   commentId: M:DrawnUi.Draw.SkiaControl.SendTapped(System.Object,DrawnUi.Draw.SkiaGesturesParameters,DrawnUi.Draw.GestureEventProcessingInfo,System.Boolean)
   parent: DrawnUi.Draw.SkiaControl
@@ -14325,6 +14416,13 @@ references:
   name: LongPressing
   nameWithType: SkiaControl.LongPressing
   fullName: DrawnUi.Draw.SkiaControl.LongPressing
+- uid: DrawnUi.Draw.SkiaControl.ContextMenu
+  commentId: P:DrawnUi.Draw.SkiaControl.ContextMenu
+  parent: DrawnUi.Draw.SkiaControl
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ContextMenu
+  name: ContextMenu
+  nameWithType: SkiaControl.ContextMenu
+  fullName: DrawnUi.Draw.SkiaControl.ContextMenu
 - uid: DrawnUi.Draw.SkiaControl.ConsumeGestures
   commentId: E:DrawnUi.Draw.SkiaControl.ConsumeGestures
   parent: DrawnUi.Draw.SkiaControl
@@ -30116,6 +30214,93 @@ references:
   - name: (
   - name: )
   - name: )
+- uid: DrawnUi.Controls.SkiaDrawer.DrawnUi.Draw.FluentExtensions.OnContextMenu``1(System.Func{DrawnUi.Controls.SkiaDrawer,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  parent: DrawnUi.Draw.FluentExtensions
+  definition: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  name: OnContextMenu<SkiaDrawer>(SkiaDrawer, Func<SkiaDrawer, ContextMenuEventArgs, bool>)
+  nameWithType: FluentExtensions.OnContextMenu<SkiaDrawer>(SkiaDrawer, Func<SkiaDrawer, ContextMenuEventArgs, bool>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnContextMenu<DrawnUi.Controls.SkiaDrawer>(DrawnUi.Controls.SkiaDrawer, System.Func<DrawnUi.Controls.SkiaDrawer, DrawnUi.Draw.ContextMenuEventArgs, bool>)
+  nameWithType.vb: FluentExtensions.OnContextMenu(Of SkiaDrawer)(SkiaDrawer, Func(Of SkiaDrawer, ContextMenuEventArgs, Boolean))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnContextMenu(Of DrawnUi.Controls.SkiaDrawer)(DrawnUi.Controls.SkiaDrawer, System.Func(Of DrawnUi.Controls.SkiaDrawer, DrawnUi.Draw.ContextMenuEventArgs, Boolean))
+  name.vb: OnContextMenu(Of SkiaDrawer)(SkiaDrawer, Func(Of SkiaDrawer, ContextMenuEventArgs, Boolean))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(DrawnUi.Controls.SkiaDrawer,System.Func{DrawnUi.Controls.SkiaDrawer,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: <
+  - uid: DrawnUi.Controls.SkiaDrawer
+    name: SkiaDrawer
+    href: DrawnUi.Controls.SkiaDrawer.html
+  - name: '>'
+  - name: (
+  - uid: DrawnUi.Controls.SkiaDrawer
+    name: SkiaDrawer
+    href: DrawnUi.Controls.SkiaDrawer.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: <
+  - uid: DrawnUi.Controls.SkiaDrawer
+    name: SkiaDrawer
+    href: DrawnUi.Controls.SkiaDrawer.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(DrawnUi.Controls.SkiaDrawer,System.Func{DrawnUi.Controls.SkiaDrawer,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaDrawer
+    name: SkiaDrawer
+    href: DrawnUi.Controls.SkiaDrawer.html
+  - name: )
+  - name: (
+  - uid: DrawnUi.Controls.SkiaDrawer
+    name: SkiaDrawer
+    href: DrawnUi.Controls.SkiaDrawer.html
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: DrawnUi.Controls.SkiaDrawer
+    name: SkiaDrawer
+    href: DrawnUi.Controls.SkiaDrawer.html
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  - name: )
 - uid: DrawnUi.Controls.SkiaDrawer.DrawnUi.Draw.FluentExtensions.OnKeyDown``1(System.Action{DrawnUi.Controls.SkiaDrawer,DrawnUi.Draw.InputKey})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnKeyDown``1(``0,System.Action{``0,DrawnUi.Draw.InputKey})
   parent: DrawnUi.Draw.FluentExtensions
@@ -38174,6 +38359,80 @@ references:
   - name: (
   - name: )
   - name: )
+- uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  commentId: M:DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+  isExternal: true
+  href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  name: OnContextMenu<T>(T, Func<T, ContextMenuEventArgs, bool>)
+  nameWithType: FluentExtensions.OnContextMenu<T>(T, Func<T, ContextMenuEventArgs, bool>)
+  fullName: DrawnUi.Draw.FluentExtensions.OnContextMenu<T>(T, System.Func<T, DrawnUi.Draw.ContextMenuEventArgs, bool>)
+  nameWithType.vb: FluentExtensions.OnContextMenu(Of T)(T, Func(Of T, ContextMenuEventArgs, Boolean))
+  fullName.vb: DrawnUi.Draw.FluentExtensions.OnContextMenu(Of T)(T, System.Func(Of T, DrawnUi.Draw.ContextMenuEventArgs, Boolean))
+  name.vb: OnContextMenu(Of T)(T, Func(Of T, ContextMenuEventArgs, Boolean))
+  spec.csharp:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.FluentExtensions.OnContextMenu``1(``0,System.Func{``0,DrawnUi.Draw.ContextMenuEventArgs,System.Boolean})
+    name: OnContextMenu
+    href: DrawnUi.Draw.FluentExtensions.html#DrawnUi_Draw_FluentExtensions_OnContextMenu__1___0_System_Func___0_DrawnUi_Draw_ContextMenuEventArgs_System_Boolean__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: System.Func`3
+    name: Func
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.func-3
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: DrawnUi.Draw.ContextMenuEventArgs
+    name: ContextMenuEventArgs
+    href: DrawnUi.Draw.ContextMenuEventArgs.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  - name: )
 - uid: DrawnUi.Draw.FluentExtensions.OnKeyDown``1(``0,System.Action{``0,DrawnUi.Draw.InputKey})
   commentId: M:DrawnUi.Draw.FluentExtensions.OnKeyDown``1(``0,System.Action{``0,DrawnUi.Draw.InputKey})
   isExternal: true
@@ -42397,6 +42656,12 @@ references:
     name: Numerics
     isExternal: true
     href: https://learn.microsoft.com/dotnet/api/system.numerics
+- uid: DrawnUi.Controls.SkiaDrawer.AutoVelocity*
+  commentId: Overload:DrawnUi.Controls.SkiaDrawer.AutoVelocity
+  href: DrawnUi.Controls.SkiaDrawer.html#DrawnUi_Controls_SkiaDrawer_AutoVelocity
+  name: AutoVelocity
+  nameWithType: SkiaDrawer.AutoVelocity
+  fullName: DrawnUi.Controls.SkiaDrawer.AutoVelocity
 - uid: DrawnUi.Draw.SnappingLayout.GetAutoVelocity(System.Numerics.Vector2)
   commentId: M:DrawnUi.Draw.SnappingLayout.GetAutoVelocity(System.Numerics.Vector2)
   parent: DrawnUi.Draw.SnappingLayout

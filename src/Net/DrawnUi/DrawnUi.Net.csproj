@@ -41,7 +41,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AppoMobi.Gestures" Version="3.10.4" />
+        <PackageReference Include="AppoMobi.Gestures" Version="3.11.1" />
         <PackageReference Include="SkiaSharp.HarfBuzz" Version="4.148.0" />
         <PackageReference Include="SkiaSharp.Skottie" Version="4.148.0" />
         <PackageReference Include="Svg.Skia" Version="4.9.0" />

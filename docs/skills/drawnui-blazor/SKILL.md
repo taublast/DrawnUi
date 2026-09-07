@@ -73,6 +73,18 @@ Real browser fullscreen targets the canvas host element (`.xaml-canvas`), not th
 
 CSS under `wwwroot/css/` resolves urls relative to that folder (`../Images/...`).
 
+## Canvas blink on first tap (auto-height Canvas) — FIXED 2026-09-07
+
+Symptom: `<Canvas>` with no `HeightRequest`, blank flash on the FIRST tap only, never after; other pages (fixed `HeightRequest`) fine. NOT context loss, NOT element recreation — the same `<canvas>` is RESIZED once (host 790.4 -> 755.2px, buffer 987 -> 943), and any width/height write clears the drawing buffer.
+
+Root cause: `Canvas.razor` `GetIntrinsicAutoCanvasSize()` passed UNIT constraints to `Content.Measure()`, which takes PIXELS. Probe: `constraints=400x∞ scale=1,25 -> 320x790,4` — content measured at 400px = 320 units, 20% too narrow, so a label wrapped an extra line and the host was reported too tall; the first text change that dirtied the parent re-measured and the canvas shrank. Fix: `UnitsToPixels(constraint, scale)` before `Measure`. Rule: DrawnUi `Measure(w,h,scale)` constraints are PIXELS; `MeasuredSize.Units` are units — never mix.
+
+Two related defects fixed alongside (neither was the trigger):
+- `SkiaView`/`SkiaViewAccelerated` did not declare `Width`/`Height`, so `SKGLView`/`SKCanvasView` `CaptureUnmatchedValues` splatted the floats onto the html canvas as culture-formatted attributes (`height="755,2"` under a `ru` browser locale) — invalid, browser resets the buffer to 300x150. Declare params so they are consumed.
+- After a canvas element size change nothing requested a repaint; under `UpdateModeType.Dynamic` the cleared buffer could stay blank until the next input. `Canvas.OnAfterRenderAsync` now calls `Update()` on size change.
+
+Diagnostic recipe: MutationObserver on `.xaml-canvas-element` (style) + its `canvas` (width/height/style) + `webglcontextlost` — if the size changes, it is auto-size, not GPU.
+
 ## Canvas blink (random one-frame blank while idle)
 
 Root cause: heavy CSS `filter: blur()` / `backdrop-filter: blur()` elements elsewhere on the page. Each blur is its own GPU layer; large animated ones compete with the WebGL canvas layer and the browser randomly drops a canvas frame. Page-level — the same canvas doesn't blink in a plainer app.
