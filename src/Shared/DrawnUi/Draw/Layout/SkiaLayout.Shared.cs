@@ -1778,11 +1778,13 @@ namespace DrawnUi.Draw
             // MeasureFirst = uniform rows (first item's size + spacing): Add/Remove/Replace are pure
             // arithmetic on the structure (followers slide by count*stride) — no rebuild, no binds,
             // no measures. Applied by TryApplyUniformAddMeasureFirst / the generic remove path
-            // (Replace decomposes into Remove+Add). Move and resets keep the full rebuild.
+            // (Replace decomposes into Remove+Add). Move is cheaper still: uniform rows make a reorder
+            // a pure rebind, so it needs no structure arithmetic at all. Resets keep the full rebuild.
             if (MeasureItemsStrategy == MeasuringStrategy.MeasureFirst
                 && args.Action is NotifyCollectionChangedAction.Add
                     or NotifyCollectionChangedAction.Remove
-                    or NotifyCollectionChangedAction.Replace)
+                    or NotifyCollectionChangedAction.Replace
+                    or NotifyCollectionChangedAction.Move)
                 return true;
 
             return false;
@@ -2232,7 +2234,11 @@ ExistingLogic:
         }
 
         /// <summary>
-        /// Handles Move collection changes while preserving existing structure
+        /// Handles Move collection changes while preserving existing structure. A reorder used to fall
+        /// through to InitializeTemplates + Invalidate, which rebuilt every cell and remeasured the whole
+        /// list to end up with the same rows in a different order — and under MeasureVisible that threw
+        /// the viewport thousands of pixels back towards the top. Now it rebinds the contexts and repaints
+        /// like the other mutations; see ApplyMoveChange for why the structure itself is left alone.
         /// </summary>
         protected virtual void HandleStructurePreservingMove(NotifyCollectionChangedEventArgs args)
         {
@@ -2242,15 +2248,31 @@ ExistingLogic:
                     $"[SkiaLayout] {Tag} Structure-preserving MOVE: from index {args.OldStartingIndex} to {args.NewStartingIndex}");
             }
 
-            // TODO: Implement move logic that updates StackStructure and _measuredItems
-            // For now, fall back to existing logic
+            // Cancel any ongoing background measurement to avoid conflicts
+            CancelBackgroundMeasurement();
+
+            // Capture the snapshot on the mutating (UI) thread (see HandleStructurePreservingAdd) before the
+            // render-thread apply/InitializeSoft re-read the live collection off-thread.
+            var contextsSnapshot = ChildrenFactory.CaptureContextsSnapshot(EffectiveItemsSource);
+
+            StageStructureChange(new StructureChange(StructureChangeType.Move, MeasureStamp)
+            {
+                StartIndex = args.OldStartingIndex,
+                TargetIndex = args.NewStartingIndex,
+                Count = args.NewItems?.Count ?? 1,
+                Items = args.NewItems?.Cast<object>().ToList(),
+                ContextsSnapshot = contextsSnapshot
+            });
+
             lock (LockMeasure)
             {
                 SafeAction(() =>
                 {
-                    ChildrenFactory.InitializeTemplates(args, CreateContentFromTemplate, EffectiveItemsSource,
-                        GetTemplatesPoolLimit(), GetTemplatesPoolPrefill());
-                    Invalidate();
+                    // Contexts are reordered, templates and measurements are kept
+                    ChildrenFactory.InitializeSoft(false, EffectiveItemsSource, GetTemplatesPoolLimit(), contextsSnapshot);
+
+                    // Trigger repaint without invalidation to apply staged changes
+                    Update();
                 });
             }
         }

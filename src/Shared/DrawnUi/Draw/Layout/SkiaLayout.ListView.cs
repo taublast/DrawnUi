@@ -1700,11 +1700,6 @@ public partial class SkiaLayout
                         continue;
                     }
 
-                    if (change.Count == 0)
-                    {
-                        continue;
-                    }
-
                     ApplyMoveChange(change);
                     break;
 
@@ -3168,13 +3163,22 @@ public partial class SkiaLayout
     }
 
     /// <summary>
-    /// Applies Move changes to StackStructure
+    /// Applies Move changes: a reorder needs no structure edit.
     /// </summary>
+    /// <remarks>
+    /// The rows themselves are unchanged — same count, same heights, same total extent — so the structure
+    /// stays valid and only the data behind each row moves, which InitializeSoft already rebound when the
+    /// change was staged. The arrange pass re-flows the affected rows from their bound views, so an
+    /// explicit permutation of the measured sizes here changed nothing that was observable (verified
+    /// against a reorder in view and one far above the viewport, both strategies).
+    /// Two things deliberately NOT done: no Remove + Add split like Replace uses (its add re-inserts an
+    /// unmeasured slot, so the list loses that row's height and the scroll drifts by a row), and no
+    /// UpdateProgressiveContentSize (a move cannot change the extent, and that estimator derives the
+    /// height from first.Top..last.Bottom, which drops the layout padding).
+    /// </remarks>
     private void ApplyMoveChange(StructureChange change)
     {
         //Debug.WriteLine($"[StackStructure] Moving item from index {change.StartIndex} to {change.TargetIndex}");
-        // TODO: Implement move logic that reorders structure
-        UpdateProgressiveContentSize();
 
         OnStructureChanged();
     }

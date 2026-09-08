@@ -162,6 +162,79 @@ public sealed class GestureRobot
         Send(TouchActionType.Wheel, args, TouchActionResult.Wheel, frameMs);
     }
 
+    private TouchActionEventArgs _heldDown;
+    private TouchActionEventArgs _heldPrev;
+    private PointF _heldPoint;
+    private PointF _heldStart;
+    private long _heldId;
+
+    /// <summary>
+    /// Presses and HOLDS a pointer down. Pairs with <see cref="PointerMoveTo"/>, <see cref="PointerHold"/>
+    /// and <see cref="PointerUp"/> to drive a drag that stays down across frames — <see cref="Pan(PointF,PointF,double,int,double)"/>
+    /// always releases, so it cannot test anything that happens while a finger rests somewhere (edge
+    /// auto-scroll, long-press-then-drag, hold-to-repeat).
+    /// </summary>
+    public void PointerDown(double x, double y, double frameMs = 16.0)
+    {
+        _heldId = ++_pointerId;
+        _heldPoint = ToPixels(x, y);
+        _heldStart = _heldPoint;
+        _heldDown = MakeArgs(_heldId, TouchActionType.Pressed, _heldPoint, _heldStart);
+        _heldDown.IsInContact = true;
+        _heldPrev = _heldDown;
+        Send(TouchActionType.Pressed, _heldDown, TouchActionResult.Down, frameMs);
+    }
+
+    /// <summary>Moves the held pointer to a point, emitting one Panning event.</summary>
+    public void PointerMoveTo(double x, double y, double frameMs = 16.0)
+    {
+        if (_heldDown == null)
+            throw new InvalidOperationException("PointerDown first");
+
+        Advance(frameMs);
+        _heldPoint = ToPixels(x, y);
+        var move = MakeArgs(_heldId, TouchActionType.Moved, _heldPoint, _heldStart);
+        move.IsInContact = true;
+        TouchActionEventArgs.FillDistanceInfo(move, _heldPrev);
+
+        if (move.Distance.Delta.X != 0 || move.Distance.Delta.Y != 0)
+            Send(TouchActionType.Moved, move, TouchActionResult.Panning, frameMs);
+        else
+            _host.RenderFrame(frameMs);
+
+        _heldPrev = move;
+    }
+
+    /// <summary>
+    /// Renders frames with the pointer held still, no events emitted. <paramref name="onFrame"/> stands in
+    /// for whatever ticker the app runs during a hold (a dispatcher timer, an animator).
+    /// </summary>
+    public void PointerHold(int frames, Action onFrame = null, double frameMs = 16.0)
+    {
+        for (var i = 0; i < frames; i++)
+        {
+            Advance(frameMs);
+            onFrame?.Invoke();
+            _host.RenderFrame(frameMs);
+        }
+    }
+
+    /// <summary>Releases the held pointer where it currently rests.</summary>
+    public void PointerUp(double frameMs = 16.0)
+    {
+        if (_heldDown == null)
+            return;
+
+        Advance(frameMs);
+        var up = MakeArgs(_heldId, TouchActionType.Released, _heldPoint, _heldStart);
+        up.IsInContact = false;
+        TouchActionEventArgs.FillDistanceInfo(up, _heldPrev);
+        Send(TouchActionType.Released, up, TouchActionResult.Up, frameMs);
+
+        _heldDown = null;
+        _heldPrev = null;
+    }
+
     private TouchActionEventArgs MakeArgs(long id, TouchActionType type, PointF pixelLocation, PointF startingPixel)
     {
         // Scale == host scale so SkiaGesturesParameters.Create does NOT rescale our pixel coords.

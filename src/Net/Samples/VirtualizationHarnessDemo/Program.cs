@@ -1,4 +1,4 @@
-using DrawnUi.Testing;
+﻿using DrawnUi.Testing;
 
 // The device-build switches (auto-test driver / motion tracer) are compile-time statics on ChatPage.
 // They MUST be off in the harness: the auto-test suite would drive jumps on the SAME pages the repros
@@ -6,6 +6,18 @@ using DrawnUi.Testing;
 DrawnChatList.ChatPage.AutoTestEnabled = false;
 DrawnChatList.ChatPage.MotionTraceEnabled = false;
 
+
+// List reorder gate: ObservableCollection.Move on a templated layout reorders in place — no rebuild,
+// no scroll jump, no content-height change — over both measuring strategies.
+VirtualizationHarnessDemo.MoveReorderRepro.Run();
+
+// Drag-to-reorder gate: a grip inside a scrolling list must reorder on a vertical drag without the
+// scroll stealing the pan, and a pan started off the grip must still scroll and never reorder.
+VirtualizationHarnessDemo.GripDragRepro.Run();
+
+// Scroll must not lose its position when a SIBLING resizes: an unconstrained measure pass used to make
+// the scroll conclude "content fits" and reset to the top (a scrolled editor list jumped away on save).
+VirtualizationHarnessDemo.EditorShapedDragRepro.Run();
 
 // Engage-on-grow vs the LoadMore that triggered it: 2-col CachedStack, tail add crossing the window
 // threshold — content must never shrink and no frame may have an empty visible band.
