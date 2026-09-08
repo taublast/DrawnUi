@@ -19,6 +19,10 @@ VirtualizationHarnessDemo.GripDragRepro.Run();
 // the scroll conclude "content fits" and reset to the top (a scrolled editor list jumped away on save).
 VirtualizationHarnessDemo.EditorShapedDragRepro.Run();
 
+// Lift-and-drop reorder: a ghost row carries the item over the list (positioned with Left/Top, which
+// offset a cache), the gap travels, a drop inside lands and a drop outside cancels back to the start.
+VirtualizationHarnessDemo.LiftDragRepro.Run();
+
 // Engage-on-grow vs the LoadMore that triggered it: 2-col CachedStack, tail add crossing the window
 // threshold — content must never shrink and no frame may have an empty visible band.
 VirtualizationHarnessDemo.EngageOnLoadMoreRepro.Run();
