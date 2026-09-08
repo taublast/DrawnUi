@@ -56,15 +56,18 @@ Under active development, more info [on our site](https://drawnui.net/articles/r
 🤩 [Fiddle](https://fiddle.drawnui.net)   
 ⛹️ [Pong in pure WASM](https://pong.appomobi.com/)
 
-## What's New 1.10.6.8
+## What's New 1.10.6.9
 
-  * Blazor: auto-sized `Canvas` (no `HeightRequest`) measured its content with unit constraints where pixels were expected, so labels wrapped an extra line and the host was reported too tall; the first change that dirtied the content re-measured, the canvas element resized and its drawing buffer blanked for a frame (the "blink on first tap"). Canvas size floats are no longer splatted onto the html canvas as culture-formatted `width`/`height` attributes, and a canvas resize now requests a repaint under `UpdateModeType.Dynamic`.
-  * Blazor: can handle browser context menu instead of supression:  [Mouse buttons and the browser context menu](docs/articles/gestures.md#mouse-buttons-and-the-browser-context-menu).
-  * Use latest `AppoMobi.Gestures` nuget version for Blazor improvements
+  * Layout system: content was arranged into up to 1px less room than it was measured for when an inset landed on a fraction of a pixel (2pt padding at scale 1.25 = 2.5px per side): measuring reserved it rounded, drawing subtracted the raw value. Buttons clipped the last glyph of some captions, at some positions only. Drawing now reserves the smaller of the two, so content can only gain room, never lose it, and whole-pixel insets are untouched.
+  * `SkiaLabel`: the glyph width cache was keyed on typeface and text only, so a width measured at one font size was served at another. It now also keys on font size, skew, scale and character spacing.
+  * `SkiaPicker`: the selection sheet is presented on the window that owns the picker instead of the app's first window, so it no longer opens behind you when a second window is open.
   * Updated docs (https://drawnui.net)
 
  ### Previously
 
+  * Blazor: auto-sized `Canvas` (no `HeightRequest`) measured its content with unit constraints where pixels were expected, so labels wrapped an extra line and the host was reported too tall; the first change that dirtied the content re-measured, the canvas element resized and its drawing buffer blanked for a frame (the "blink on first tap"). Canvas size floats are no longer splatted onto the html canvas as culture-formatted `width`/`height` attributes, and a canvas resize now requests a repaint under `UpdateModeType.Dynamic`.
+  * Blazor: can handle browser context menu instead of supression:  [Mouse buttons and the browser context menu](docs/articles/gestures.md#mouse-buttons-and-the-browser-context-menu).
+  * Use latest `AppoMobi.Gestures` nuget version for Blazor improvements
   * SkiaLabel: built-in drop shadow size now cached properly
   * SkiaShell blur backdrop and modal animation fixed
   * HotFix for autosized templated layout not growing/shrinking when NOT inside a scroll

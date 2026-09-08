@@ -219,6 +219,17 @@ Two layers must BOTH be on, or handlers never fire: (1) canvas host input mode, 
 - `SKPaint` no longer carries text state: `Typeface`, `TextSize`, `TextAlign`, `MeasureText`, `GetTextPath` etc. moved to `SKFont`. Draw text as `canvas.DrawText(text, x, y, font, paint)` — font geometry from `SKFont`, color/shader/stroke from `SKPaint`. Text AA via `SKFontEdging` on the font (`SubpixelAntialias`/`Antialias` — DrawnUI switches on `Super.FontSubPixelRendering`), not paint flags.
 - SKSL scalar uniforms must be `float`, not `float[1]` (see drawnui-fluent shader section).
 
+## Fractional insets: measure and draw must reserve them the same way (fixed 2026-09-07)
+
+Root-caused from "some button captions lose their last glyph, but only some buttons": measuring reserves padding/margins **rounded per side** (`GetAllMarginsInPixels`), while the draw path used to subtract the **raw fractional** value (`ContractPixelsRect`) and `GetDrawingRectForChildren` rounded the **absolute edges** after adding a fractional inset. With 2pt padding at scale 1.25 measure reserves 2+2=4px but draw took 2.5+2.5=5px, so a child was arranged 1px narrower than it was measured for and clipped its own content; rounding absolute edges also made the loss depend on the control's position on screen (`Round(2.5)=2` but `Round(108.5)=108`, banker's rounding).
+
+- Lib fix (DrawnUi `d8c0d469`): `SkiaControl.ContractPixelsRectForContent` reserves `min(raw, rounded)` per side and is used wherever padding defines the content rect (layout children, shape children, label text, editor). Deliberately NOT the exact-match version tried first: matching measure exactly also takes room away where the raw inset rounds UP (3pt at 1.25 = 3.75 raw vs 4 rounded), which can start clipping layouts that exactly filled the old rect. `min` fixes the defect while being provably non-shrinking. `GetDrawingRectForChildren` was left alone; it is a sibling inconsistency, not the path that clipped.
+- Vetting a layout-math change: enumerate scales 1..3 x insets x widths x positions and compare old vs new formula before and after — count how many cases give content LESS room than before (must be 0) and confirm the new reservation never exceeds what measure reserved.
+- Rule when writing layout math: never mix "round the inset" with "round the edge"; a control's content rect must be reproducible from its measured size regardless of where it sits.
+- Diagnosing this class: at draw time compare the control's `MeasuredSize.Pixels.Width` with the `destination` it is arranged into and with its own `ContentSize`; a 1-2px deficit that varies per instance is inset rounding, not font metrics.
+- Related, same session (DrawnUi `9b0637af`): `SkiaLabel`'s glyph width cache was keyed on typeface + text only, so a width measured at one font size was reused at another. It now keys on font size, skew, scale and character spacing too.
+- Note `CharacterSpacing` (default 1.0) multiplies into measured line width, and an app-wide `SkiaLabel` style with `ApplyToDerivedTypes="True"` reaches `SkiaButton`'s inner label as well.
+
 ## SkiaImage local files decode SYNCHRONOUSLY on the binding thread (verified 2026-09-06)
 
 `SkiaImageManager.LoadLocalAsync` defaults to `false`: setting `Source` to a file path or stream decodes the bitmap right there, on whatever thread set it (main thread in a cell bind). A grid of 36 tiles bound to 1920x1080 JPEGs stalled the UI 2.6 s (65 ms per bind, and MeasureFirst binds every cell about 3 times: measure pass, height change, draw). Rules for image grids:
