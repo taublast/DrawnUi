@@ -1702,6 +1702,7 @@ namespace DrawnUi.Draw
 
                 var lineIndex = 0;
                 var lineResult = "";
+                var paragraphStartLineCount = result.Count;
                 float width = 0;
                 var space = SpaceChar;
                 bool spanPostponed = false;
@@ -2016,13 +2017,16 @@ namespace DrawnUi.Draw
                 //last line
                 if (stackWords.Count == 0) //!string.IsNullOrEmpty(lineResult) &&
                 {
-                    if (string.IsNullOrEmpty(lineResult))
-                    {
-                        AddEmptyLineInternal();
-                    }
-                    else
+                    if (!string.IsNullOrEmpty(lineResult))
                     {
                         AddLine(lineResult);
+                    }
+                    else if (result.Count == paragraphStartLineCount)
+                    {
+                        //nothing was emitted for this paragraph, so it is really empty.
+                        //otherwise lineResult is empty just because AddLine already consumed it
+                        //(word-break/truncation exit) and we must not append a phantom empty line
+                        AddEmptyLineInternal();
                     }
                 }
 
