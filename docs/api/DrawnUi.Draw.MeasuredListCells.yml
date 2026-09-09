@@ -20,7 +20,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: MeasuredListCells
     path: ../src/Shared/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 5092
+    startLine: 5096
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -75,7 +75,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: .ctor
     path: ../src/Shared/DrawnUi/Draw/Layout/SkiaLayout.ListView.cs
-    startLine: 5094
+    startLine: 5098
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

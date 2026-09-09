@@ -21,7 +21,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: DisposableAction
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6605
+    startLine: 6629
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -60,7 +60,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: .ctor
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6609
+    startLine: 6633
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -92,7 +92,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: Dispose
     path: ../src/Shared/DrawnUi/Draw/Base/SkiaControl.Shared.cs
-    startLine: 6613
+    startLine: 6637
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

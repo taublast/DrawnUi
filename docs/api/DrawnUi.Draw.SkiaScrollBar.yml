@@ -781,6 +781,7 @@ items:
   - DrawnUi.Draw.SkiaControl.MeasureAbsoluteBase(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.ContractPixelsRect(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.ContractPixelsRect(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
+  - DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
   - DrawnUi.Draw.SkiaControl.ExpandPixelsRect(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
   - DrawnUi.Draw.SkiaControl.GetDrawingRectForChildren(SkiaSharp.SKRect,System.Double)
   - DrawnUi.Draw.SkiaControl.GetDrawingRectWithMargins(SkiaSharp.SKRect,System.Double)
@@ -16978,6 +16979,61 @@ references:
   - uid: DrawnUi.Draw.SkiaControl.ContractPixelsRect(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
     name: ContractPixelsRect
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ContractPixelsRect_SkiaSharp_SKRect_System_Single_Microsoft_Maui_Thickness_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Thickness
+    name: Thickness
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
+  commentId: M:DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ContractPixelsRectForContent_SkiaSharp_SKRect_System_Single_Microsoft_Maui_Thickness_
+  name: ContractPixelsRectForContent(SKRect, float, Thickness)
+  nameWithType: SkiaControl.ContractPixelsRectForContent(SKRect, float, Thickness)
+  fullName: DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect, float, Microsoft.Maui.Thickness)
+  nameWithType.vb: SkiaControl.ContractPixelsRectForContent(SKRect, Single, Thickness)
+  fullName.vb: DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect, Single, Microsoft.Maui.Thickness)
+  name.vb: ContractPixelsRectForContent(SKRect, Single, Thickness)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
+    name: ContractPixelsRectForContent
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ContractPixelsRectForContent_SkiaSharp_SKRect_System_Single_Microsoft_Maui_Thickness_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Thickness
+    name: Thickness
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
+    name: ContractPixelsRectForContent
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ContractPixelsRectForContent_SkiaSharp_SKRect_System_Single_Microsoft_Maui_Thickness_
   - name: (
   - uid: SkiaSharp.SKRect
     name: SKRect

@@ -302,7 +302,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AppendSpan
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
-    startLine: 95
+    startLine: 96
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw
@@ -338,7 +338,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: AppendChar
     path: ../src/Shared/DrawnUi/Draw/Text/SkiaLabel.SpanMeasurement.cs
-    startLine: 105
+    startLine: 106
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Draw

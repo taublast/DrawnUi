@@ -72,6 +72,7 @@ items:
   - DrawnUi.Controls.SkiaMauiEditor.UpdateControl
   - DrawnUi.Controls.SkiaMauiEditor.UpdatePlaceholderLabel
   - DrawnUi.Controls.SkiaMauiEditor.UpdatePlaceholderVisibility
+  - DrawnUi.Controls.SkiaMauiEditor.WhenFocusChanged(System.Boolean)
   - DrawnUi.Controls.SkiaMauiEditor.WillClipBounds
   langs:
   - csharp
@@ -625,6 +626,7 @@ items:
   - DrawnUi.Draw.SkiaControl.MeasureAbsoluteBase(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.ContractPixelsRect(SkiaSharp.SKRect,System.Single)
   - DrawnUi.Draw.SkiaControl.ContractPixelsRect(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
+  - DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
   - DrawnUi.Draw.SkiaControl.ExpandPixelsRect(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
   - DrawnUi.Draw.SkiaControl.GetDrawingRectForChildren(SkiaSharp.SKRect,System.Double)
   - DrawnUi.Draw.SkiaControl.GetDrawingRectWithMargins(SkiaSharp.SKRect,System.Double)
@@ -3036,6 +3038,40 @@ items:
     return:
       type: Microsoft.Maui.Controls.BindableProperty
     content.vb: Public Shared ReadOnly IsFocusedProperty As BindableProperty
+- uid: DrawnUi.Controls.SkiaMauiEditor.WhenFocusChanged(System.Boolean)
+  commentId: M:DrawnUi.Controls.SkiaMauiEditor.WhenFocusChanged(System.Boolean)
+  id: WhenFocusChanged(System.Boolean)
+  parent: DrawnUi.Controls.SkiaMauiEditor
+  langs:
+  - csharp
+  - vb
+  name: WhenFocusChanged(bool)
+  nameWithType: SkiaMauiEditor.WhenFocusChanged(bool)
+  fullName: DrawnUi.Controls.SkiaMauiEditor.WhenFocusChanged(bool)
+  type: Method
+  source:
+    remote:
+      path: src/Maui/DrawnUi/Controls/EditText/SkiaMauiEditor.cs
+      branch: Cells
+      repo: https://github.com/DrawnUi/DrawnUi.Net.git
+    id: WhenFocusChanged
+    path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEditor.cs
+    startLine: 696
+  assemblies:
+  - DrawnUi.Maui
+  namespace: DrawnUi.Controls
+  summary: Raises <xref href="DrawnUi.Controls.SkiaMauiEditor.FocusChanged" data-throw-if-not-resolved="false"></xref>. Fires for native focus changes as well as code-driven ones.
+  example: []
+  syntax:
+    content: protected virtual void WhenFocusChanged(bool state)
+    parameters:
+    - id: state
+      type: System.Boolean
+    content.vb: Protected Overridable Sub WhenFocusChanged(state As Boolean)
+  overload: DrawnUi.Controls.SkiaMauiEditor.WhenFocusChanged*
+  nameWithType.vb: SkiaMauiEditor.WhenFocusChanged(Boolean)
+  fullName.vb: DrawnUi.Controls.SkiaMauiEditor.WhenFocusChanged(Boolean)
+  name.vb: WhenFocusChanged(Boolean)
 - uid: DrawnUi.Controls.SkiaMauiEditor.IsFocused
   commentId: P:DrawnUi.Controls.SkiaMauiEditor.IsFocused
   id: IsFocused
@@ -3054,7 +3090,7 @@ items:
       repo: https://github.com/DrawnUi/DrawnUi.Net.git
     id: IsFocused
     path: ../src/Maui/DrawnUi/Controls/EditText/SkiaMauiEditor.cs
-    startLine: 691
+    startLine: 701
   assemblies:
   - DrawnUi.Maui
   namespace: DrawnUi.Controls
@@ -13923,6 +13959,61 @@ references:
   - uid: DrawnUi.Draw.SkiaControl.ContractPixelsRect(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
     name: ContractPixelsRect
     href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ContractPixelsRect_SkiaSharp_SKRect_System_Single_Microsoft_Maui_Thickness_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Thickness
+    name: Thickness
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness
+  - name: )
+- uid: DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
+  commentId: M:DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
+  parent: DrawnUi.Draw.SkiaControl
+  isExternal: true
+  href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ContractPixelsRectForContent_SkiaSharp_SKRect_System_Single_Microsoft_Maui_Thickness_
+  name: ContractPixelsRectForContent(SKRect, float, Thickness)
+  nameWithType: SkiaControl.ContractPixelsRectForContent(SKRect, float, Thickness)
+  fullName: DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect, float, Microsoft.Maui.Thickness)
+  nameWithType.vb: SkiaControl.ContractPixelsRectForContent(SKRect, Single, Thickness)
+  fullName.vb: DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect, Single, Microsoft.Maui.Thickness)
+  name.vb: ContractPixelsRectForContent(SKRect, Single, Thickness)
+  spec.csharp:
+  - uid: DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
+    name: ContractPixelsRectForContent
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ContractPixelsRectForContent_SkiaSharp_SKRect_System_Single_Microsoft_Maui_Thickness_
+  - name: (
+  - uid: SkiaSharp.SKRect
+    name: SKRect
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/skiasharp.skrect
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.single
+  - name: ','
+  - name: " "
+  - uid: Microsoft.Maui.Thickness
+    name: Thickness
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.maui.thickness
+  - name: )
+  spec.vb:
+  - uid: DrawnUi.Draw.SkiaControl.ContractPixelsRectForContent(SkiaSharp.SKRect,System.Single,Microsoft.Maui.Thickness)
+    name: ContractPixelsRectForContent
+    href: DrawnUi.Draw.SkiaControl.html#DrawnUi_Draw_SkiaControl_ContractPixelsRectForContent_SkiaSharp_SKRect_System_Single_Microsoft_Maui_Thickness_
   - name: (
   - uid: SkiaSharp.SKRect
     name: SKRect
@@ -37460,6 +37551,18 @@ references:
   name: CommandOnTextChanged
   nameWithType: SkiaMauiEditor.CommandOnTextChanged
   fullName: DrawnUi.Controls.SkiaMauiEditor.CommandOnTextChanged
+- uid: DrawnUi.Controls.SkiaMauiEditor.FocusChanged
+  commentId: E:DrawnUi.Controls.SkiaMauiEditor.FocusChanged
+  href: DrawnUi.Controls.SkiaMauiEditor.html#DrawnUi_Controls_SkiaMauiEditor_FocusChanged
+  name: FocusChanged
+  nameWithType: SkiaMauiEditor.FocusChanged
+  fullName: DrawnUi.Controls.SkiaMauiEditor.FocusChanged
+- uid: DrawnUi.Controls.SkiaMauiEditor.WhenFocusChanged*
+  commentId: Overload:DrawnUi.Controls.SkiaMauiEditor.WhenFocusChanged
+  href: DrawnUi.Controls.SkiaMauiEditor.html#DrawnUi_Controls_SkiaMauiEditor_WhenFocusChanged_System_Boolean_
+  name: WhenFocusChanged
+  nameWithType: SkiaMauiEditor.WhenFocusChanged
+  fullName: DrawnUi.Controls.SkiaMauiEditor.WhenFocusChanged
 - uid: DrawnUi.Controls.SkiaMauiEditor.IsFocused*
   commentId: Overload:DrawnUi.Controls.SkiaMauiEditor.IsFocused
   href: DrawnUi.Controls.SkiaMauiEditor.html#DrawnUi_Controls_SkiaMauiEditor_IsFocused
