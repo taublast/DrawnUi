@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="Sandbox.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -15,9 +15,14 @@
         Route="MainPage" />-->
 
     <ShellContent
+        Title="Issue 338 repro"
+        ContentTemplate="{DataTemplate sandbox:Issue338Page}"
+        Route="MainPage" />
+
+    <!--<ShellContent
         Title="SkiaWheelScroll Test"
         ContentTemplate="{DataTemplate sandbox:MainPageWheel}"
-        Route="MainPage" />
+        Route="MainPage" />-->
 
     <!--<ShellContent
         Title="DrawnUI for .NET MAUI"

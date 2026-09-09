@@ -685,8 +685,18 @@ public class SkiaMauiEditor : SkiaMauiElement, ISkiaGestureListener
     {
         if (bindable is SkiaMauiEditor control)
         {
+            // FocusChanged was declared but never raised here, so consumers saving their text on
+            // unfocus (the usual pattern for a multiline field, where Enter is a newline rather
+            // than a commit) silently lost every edit. SkiaMauiEntry has always raised it.
+            control.WhenFocusChanged((bool)newvalue);
             control.SetFocusInternal((bool)newvalue);
         }
+    }
+
+    /// <summary>Raises <see cref="FocusChanged"/>. Fires for native focus changes as well as code-driven ones.</summary>
+    protected virtual void WhenFocusChanged(bool state)
+    {
+        FocusChanged?.Invoke(this, state);
     }
 
     public new bool IsFocused

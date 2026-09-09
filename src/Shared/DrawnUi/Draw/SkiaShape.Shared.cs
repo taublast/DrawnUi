@@ -177,7 +177,7 @@ namespace DrawnUi.Draw
                 destination = CalculateShapeSizeForStroke(destination, scale);
             }
 
-            return ContractPixelsRect(destination, scale, UsePadding);
+            return ContractPixelsRectForContent(destination, scale, UsePadding);
         }
 
         protected virtual SKRect CalculateClipSizeForStroke(SKRect destination, float scale)

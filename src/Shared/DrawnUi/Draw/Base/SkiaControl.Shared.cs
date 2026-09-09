@@ -6202,6 +6202,30 @@ namespace DrawnUi.Draw
             );
         }
 
+        /// <summary>
+        /// Contracts a rect by an inset for CONTENT (children, text): reserves the smaller of the raw
+        /// inset and the rounded one that measuring reserved (<see cref="GetAllMarginsInPixels"/>).
+        /// Drawing used to subtract the raw value, so 2pt padding at scale 1.25 took 2.5+2.5=5px where
+        /// measure had reserved 2+2=4 and the content was arranged 1px narrower than it was measured
+        /// for — a button label then clipped its last glyph. Taking the smaller of the two can only give
+        /// content more room than before, never less, so existing layouts cannot shrink.
+        /// </summary>
+        public static SKRect ContractPixelsRectForContent(SKRect rect, float scale, Thickness amount)
+        {
+            static float Reserve(double inset, float scale)
+            {
+                var raw = (float)(inset * scale);
+                return Math.Min(raw, (float)Math.Round(raw));
+            }
+
+            return new SKRect(
+                rect.Left + Reserve(amount.Left, scale),
+                rect.Top + Reserve(amount.Top, scale),
+                rect.Right - Reserve(amount.Right, scale),
+                rect.Bottom - Reserve(amount.Bottom, scale)
+            );
+        }
+
         public static SKRect ExpandPixelsRect(SKRect rect, float scale, Thickness amount)
         {
             return new SKRect(

@@ -1,4 +1,4 @@
-using System.Numerics;
+﻿using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace DrawnUi.Draw;
@@ -142,6 +142,25 @@ public partial class SkiaScroll
 
     protected virtual void InitializeViewport(float scale)
     {
+        // A measure pass can arrive UNCONSTRAINED on the scrolling axis: a Fill scroll inside an
+        // auto-sizing stack is asked for its desired size before it is handed a real height, and with an
+        // infinite constraint it measures as tall as its own content. Every viewport-relative conclusion
+        // drawn from such a pass is wrong — content minus viewport comes out zero, so the scroll decides
+        // "everything fits, nothing to scroll" and resets the offset to the top. Latching that reset a
+        // scrolled list back to 0 whenever ANY sibling changed size (device 2026-09-08: dropping a
+        // dragged row wrote a status label, and the list jumped away from the drop). Wait for a pass that
+        // actually constrains the axis; ApplyContentSize will call again when the real size arrives.
+        var axisConstrained = Orientation switch
+        {
+            ScrollOrientation.Horizontal => float.IsFinite(Viewport.Units.Width),
+            ScrollOrientation.Vertical => float.IsFinite(Viewport.Units.Height),
+            ScrollOrientation.Both => float.IsFinite(Viewport.Units.Width) && float.IsFinite(Viewport.Units.Height),
+            _ => true,
+        };
+
+        if (!axisConstrained)
+            return;
+
         _loadMoreBottomTriggeredAt = 0;
         _loadMoreTopTriggeredAt = 0;
 
