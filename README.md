@@ -58,10 +58,12 @@ Under active development, more info [on our site](https://drawnui.net/articles/r
 
 ## What's New 1.10.6.9
 
+  * Makes drag-to-reorder work on a templated SkiaLayout inside a SkiaScroll (handle `ObservableCollection.Move`).
   * Layout system: content was arranged into up to 1px less room than it was measured for when an inset landed on a fraction of a pixel (2pt padding at scale 1.25 = 2.5px per side): measuring reserved it rounded, drawing subtracted the raw value. Buttons clipped the last glyph of some captions, at some positions only. Drawing now reserves the smaller of the two, so content can only gain room, never lose it, and whole-pixel insets are untouched.
+  * Fix `SkiaLabel` to no longer emits a phantom empty line on truncation (issue #338)
   * `SkiaLabel`: the glyph width cache was keyed on typeface and text only, so a width measured at one font size was served at another. It now also keys on font size, skew, scale and character spacing.
   * `SkiaPicker`: the selection sheet is presented on the window that owns the picker instead of the app's first window, so it no longer opens behind you when a second window is open.
-  * Updated docs (https://drawnui.net)
+  * Updated docs and skills at [https://drawnui.net](https://drawnui.net)
 
  ### Previously
 
